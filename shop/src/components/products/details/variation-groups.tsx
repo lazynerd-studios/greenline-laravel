@@ -1,6 +1,6 @@
-import Attribute from '@components/ui/attribute';
+import Attribute from '@/components/ui/attribute';
 import { useAttributes } from './attributes.context';
-import Scrollbar from '@components/ui/scrollbar';
+import Scrollbar from '@/components/ui/scrollbar';
 interface Props {
   variations: any;
   variant?: 'normal' | 'outline';
@@ -18,11 +18,11 @@ const VariationGroups: React.FC<Props> = ({ variations, variant }) => {
           className="py-4 border-b border-border-200  border-opacity-70 first:pt-0 flex items-center last:pb-0 last:border-b-0"
           key={index}
         >
-          <span className="text-sm font-semibold text-heading leading-none capitalize me-5 min-w-[60px] inline-block whitespace-nowrap">
-            {replaceHyphens(variationName)}:
+          <span className="text-sm font-semibold text-heading leading-none capitalize ltr:mr-5 rtl:ml-5 min-w-[60px] inline-block whitespace-nowrap">
+            {replaceHyphens(variationName)} :
           </span>
           <Scrollbar className="w-full pb-4">
-            <div className="w-full flex space-s-4 -mb-1.5">
+            <div className="w-full flex space-x-4 rtl:space-x-reverse -mb-1.5">
               {variations[variationName].map((attribute: any) => (
                 <Attribute
                   // className={variationName}

@@ -1,16 +1,23 @@
-What?
+1. remove the following code from \_document.tsx:
 
-1. Compact Layout Is only for book demo if not then needs to be generic
-2. also need to add the static data
-3. doc for CTA section
-4. doc for the footer
-5. Became a Seller
-6. ENV validation
-7. Download Digital Products on rest API
-8. need to fix shop dashboard sidebar item spacing
-9. load more data didn't clear the previous data
-10. swiper slider issues also may write a render component for it
-11. group product for book also need conditional for ssr
-12. check warning
-13. subscription mutation
-14. authors and manufacturers ssr
+```
+if (process.env.NODE_ENV !== 'production') {
+      i18n?.reloadResources(locale);
+    }
+```
+
+on favour of: reloadOnPrerender = true
+
+2. move RTL_LANGUAGES to the constants file
+3. replace AppProviders with QueryProvider at \_app.tsx
+4. use alias `@/*` for all our local imports to avoid `node_modules` conflicts
+5. use `import type` for all our type imports.
+
+//FIXME:
+
+1. Logout redirection from authorized routes
+2. Address Form Type Selection Issue
+3. Remove Selected Address if new User is Logged In (from LocalStorage)
+4. Remove Address Delete from Checkout Page and move it to Profile Page
+5. Accounts pages design should improve at least a container with
+6. We need to make a Paper component for the Checkout and Profile Page

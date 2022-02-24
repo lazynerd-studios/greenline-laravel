@@ -1,14 +1,12 @@
-import BakeryCategoryLoader from '@components/ui/loaders/bakery-categories-loader';
-import NotFound from '@components/ui/not-found';
-import Carousel from '@components/ui/carousel';
-import ManufacturerCard from '@components/manufacturer/card';
-import SectionBlock from '@components/ui/section-block';
-import { ROUTES } from '@lib/routes';
-import ErrorMessage from '@components/ui/error-message';
-import useTopManufacturers from '@framework/manufacturers/use-top-manufacturers';
-import { Manufacturer } from '@framework/types';
-import ManufacturerLoader from '@components/ui/loaders/manufacturer-loader';
-import rangeMap from '@lib/range-map';
+import NotFound from '@/components/ui/not-found';
+import Carousel from '@/components/ui/carousel';
+import ManufacturerCard from '@/components/manufacturer/card';
+import SectionBlock from '@/components/ui/section-block';
+import { ROUTES } from '@/lib/routes';
+import ErrorMessage from '@/components/ui/error-message';
+import { useTopManufacturers } from '@/framework/manufacturer';
+import ManufacturerLoader from '@/components/ui/loaders/manufacturer-loader';
+import rangeMap from '@/lib/range-map';
 
 const breakpoints = {
   320: {
@@ -36,7 +34,9 @@ const breakpoints = {
 };
 
 const TopManufacturersGrid: React.FC = () => {
-  const { manufacturers, isLoading, error } = useTopManufacturers();
+  const { manufacturers, isLoading, error } = useTopManufacturers({
+    limit: 10,
+  });
 
   if (error) return <ErrorMessage message={error.message} />;
 
@@ -44,8 +44,7 @@ const TopManufacturersGrid: React.FC = () => {
     return (
       <SectionBlock title="text-top-manufacturer" href={ROUTES.MANUFACTURERS}>
         <div className="">
-          <div className="w-full grid grid-flow-col gap-6">
-            {/* <BakeryCategoryLoader /> */}
+          <div className="grid w-full grid-flow-col gap-6">
             {rangeMap(4, (i) => (
               <ManufacturerLoader key={i} uniqueKey={`manufacturer-${i}`} />
             ))}
@@ -67,7 +66,7 @@ const TopManufacturersGrid: React.FC = () => {
             breakpoints={breakpoints}
             spaceBetween={30}
           >
-            {(item: Manufacturer) => <ManufacturerCard item={item} />}
+            {(item) => <ManufacturerCard item={item} />}
           </Carousel>
         </div>
       )}

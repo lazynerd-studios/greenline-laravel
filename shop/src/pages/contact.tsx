@@ -1,36 +1,36 @@
 import { useTranslation } from 'next-i18next';
-import Contact from '@framework/contact/contact';
-import { Image } from '@components/ui/image';
-import contactIllustration from '@assets/contact-illustration.svg';
-import { getLayout } from '@components/layouts/layout';
-import { useSettings } from '@components/settings/settings.context';
-import { formatAddress } from '@lib/format-address';
-import { getIcon } from '@lib/get-icon';
+import ContactForm from '@/components/settings/contact-form';
+import { Image } from '@/components/ui/image';
+import contactIllustration from '@/assets/contact-illustration.svg';
+import { getLayout } from '@/components/layouts/layout';
+import { formatAddress } from '@/lib/format-address';
+import { getIcon } from '@/lib/get-icon';
 import isEmpty from 'lodash/isEmpty';
-import * as socialIcons from '@components/icons/social';
-import Seo from '@components/seo/seo';
-export { getStaticProps } from '@framework/ssr/common';
+import * as socialIcons from '@/components/icons/social';
+import Seo from '@/components/seo/seo';
+import { useSettings } from '@/framework/settings';
+export { getStaticProps } from '@/framework/general.ssr';
 
 export const ContactPage = () => {
   const { t } = useTranslation('common');
-  const settings = useSettings();
+  const { settings } = useSettings();
   return (
     <>
       <Seo title={'Contact'} url={'contact'} />
       <div className="w-full bg-gray-100">
-        <div className="flex flex-col md:flex-row max-w-7xl w-full mx-auto py-10 px-5 xl:py-14 xl:px-8 2xl:px-14">
+        <div className="mx-auto flex w-full max-w-7xl flex-col py-10 px-5 md:flex-row xl:py-14 xl:px-8 2xl:px-14">
           {/* sidebar */}
-          <div className="w-full md:w-72 lg:w-96 bg-light p-5 flex-shrink-0 order-2 md:order-1">
-            <div className="w-full flex items-center justify-center overflow-hidden mb-8">
+          <div className="order-2 w-full shrink-0 bg-light p-5 md:order-1 md:w-72 lg:w-96">
+            <div className="mb-8 flex w-full items-center justify-center overflow-hidden">
               <Image
                 src={contactIllustration}
                 alt={t('nav-menu-contact')}
-                className="w-full h-auto"
+                className="h-auto w-full"
               />
             </div>
 
-            <div className="flex flex-col mb-8">
-              <span className="font-semibold text-heading mb-3">
+            <div className="mb-8 flex flex-col">
+              <span className="mb-3 font-semibold text-heading">
                 {t('text-address')}
               </span>
               <span className="text-sm text-body">
@@ -40,8 +40,8 @@ export const ContactPage = () => {
               </span>
             </div>
 
-            <div className="flex flex-col mb-8">
-              <span className="font-semibold text-heading mb-3">
+            <div className="mb-8 flex flex-col">
+              <span className="mb-3 font-semibold text-heading">
                 {t('text-phone')}
               </span>
               <span className="text-sm text-body">
@@ -51,8 +51,8 @@ export const ContactPage = () => {
               </span>
             </div>
             {settings?.contactDetails?.website && (
-              <div className="flex flex-col mb-8">
-                <span className="font-semibold text-heading mb-3">
+              <div className="mb-8 flex flex-col">
+                <span className="mb-3 font-semibold text-heading">
                   {t('text-website')}
                 </span>
                 <div className="flex items-center justify-between">
@@ -63,7 +63,7 @@ export const ContactPage = () => {
                     href={settings?.contactDetails?.website ?? '#'}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-sm text-accent font-semibold hover:text-accent-hover focus:outline-none focus:text-blue-500"
+                    className="text-sm font-semibold text-accent hover:text-accent-hover focus:text-blue-500 focus:outline-none"
                   >
                     {t('text-visit-site')}
                   </a>
@@ -71,8 +71,8 @@ export const ContactPage = () => {
               </div>
             )}
 
-            <div className="flex flex-col mb-8">
-              <span className="font-semibold text-heading mb-4">
+            <div className="mb-8 flex flex-col">
+              <span className="mb-4 font-semibold text-heading">
                 {t('text-follow-us')}
               </span>
               <div className="flex items-center justify-start">
@@ -83,7 +83,7 @@ export const ContactPage = () => {
                       href={item?.url}
                       target="_blank"
                       rel="noreferrer"
-                      className={`text-muted focus:outline-none me-8 last:me-0 transition-colors duration-300 hover:${item.hoverClass}`}
+                      className={`text-muted transition-colors duration-300 focus:outline-none ltr:mr-8 ltr:last:mr-0 rtl:ml-8 rtl:last:ml-0 hover:${item.hoverClass}`}
                     >
                       {getIcon({
                         iconList: socialIcons,
@@ -98,11 +98,11 @@ export const ContactPage = () => {
           </div>
 
           {/* Contact form */}
-          <div className="w-full order-1 md:order-2 mb-8 md:mb-0 md:ms-7 lg:ms-9 p-5 md:p-8 bg-light">
-            <h1 className="mb-7 text-xl md:text-2xl font-body font-bold text-heading">
+          <div className="order-1 mb-8 w-full bg-light p-5 md:order-2 md:mb-0 md:p-8 ltr:md:ml-7 rtl:md:mr-7 ltr:lg:ml-9 rtl:lg:mr-9">
+            <h1 className="mb-7 font-body text-xl font-bold text-heading md:text-2xl">
               {t('text-questions-comments')}
             </h1>
-            <Contact />
+            <ContactForm />
           </div>
         </div>
       </div>

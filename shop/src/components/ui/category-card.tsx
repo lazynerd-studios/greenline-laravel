@@ -1,6 +1,6 @@
-import { Image } from '@components/ui/image';
-import { productPlaceholder } from '@lib/placeholders';
-import { formatString } from '@lib/format-string';
+import { Image } from '@/components/ui/image';
+import { productPlaceholder } from '@/lib/placeholders';
+import { formatString } from '@/lib/format-string';
 import { useTranslation } from 'next-i18next';
 
 interface CategoryItemProps {
@@ -33,7 +33,7 @@ const CategoryCard: React.FC<CategoryItemProps> = ({ item, onClick }) => {
         </button>
       </div>
 
-      <div className="absolute bottom-0 end-0 w-full h-full rounded-lg overflow-hidden">
+      <div className="absolute bottom-0 ltr:right-0 rtl:left-0 w-full h-full rounded-lg overflow-hidden">
         <Image
           className="w-full h-full"
           src={item?.image?.original ?? productPlaceholder}

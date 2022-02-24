@@ -1,8 +1,8 @@
 import cn from 'classnames';
-import { avatarPlaceholder } from '@lib/placeholders';
-import { Image } from '@components/ui/image';
-import Link from '@components/ui/link';
-import { ROUTES } from '@lib/routes';
+import { avatarPlaceholder } from '@/lib/placeholders';
+import { Image } from '@/components/ui/image';
+import Link from '@/components/ui/link';
+import { ROUTES } from '@/lib/routes';
 
 interface AuthorItemProps {
   item: any;

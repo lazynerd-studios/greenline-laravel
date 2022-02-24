@@ -1,17 +1,19 @@
-import { Image } from '@components/ui/image';
+import { Image } from '@/components/ui/image';
 import cn from 'classnames';
-import Link from '@components/ui/link';
-import { useSettings } from '@components/settings/settings.context';
-import { logoPlaceholder } from '@lib/placeholders';
+import Link from '@/components/ui/link';
+import { logoPlaceholder } from '@/lib/placeholders';
+import { useSettings } from '@/framework/settings';
 
 const Logo: React.FC<React.AnchorHTMLAttributes<{}>> = ({
   className,
   ...props
 }) => {
-  const { logo, siteTitle } = useSettings();
+  const {
+    settings: { logo, siteTitle },
+  } = useSettings();
   return (
     <Link href="/" className={cn('inline-flex', className)} {...props}>
-      <span className="overflow-hidden relative w-32 md:w-40 h-10">
+      <span className="relative h-10 w-32 overflow-hidden md:w-40">
         <Image
           src={logo?.original ?? logoPlaceholder}
           alt={siteTitle || 'PickBazar Logo'}

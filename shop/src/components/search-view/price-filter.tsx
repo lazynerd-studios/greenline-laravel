@@ -1,4 +1,4 @@
-import Slider from '@components/ui/forms/range-slider';
+import Slider from '@/components/ui/forms/range-slider';
 import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';

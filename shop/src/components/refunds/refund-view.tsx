@@ -1,19 +1,19 @@
-import { Table } from '@components/ui/table';
-import usePrice from '@lib/use-price';
+import { Table } from '@/components/ui/table';
+import usePrice from '@/lib/use-price';
 import { useTranslation } from 'next-i18next';
-import { useIsRTL } from '@lib/locals';
+import { useIsRTL } from '@/lib/locals';
 import { useMemo } from 'react';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
-import Badge from '@components/ui/badge';
-import Card from '@components/ui/cards/card';
-import { Eye } from '@components/icons/eye-icon';
-import Link from '@components/ui/link';
-import { ROUTES } from '@lib/routes';
-import ErrorMessage from '@components/ui/error-message';
-import useRefunds from '@framework/refunds/use-refunds';
+import Badge from '@/components/ui/badge';
+import Card from '@/components/ui/cards/card';
+import { Eye } from '@/components/icons/eye-icon';
+import Link from '@/components/ui/link';
+import { ROUTES } from '@/lib/routes';
+import ErrorMessage from '@/components/ui/error-message';
+import { useRefunds } from '@/framework/order';
 type AlignType = 'left' | 'right' | 'center';
 const RenderStatusBadge: React.FC<{ status: string }> = ({ status }) => {
   const { t } = useTranslation('common');
@@ -32,7 +32,9 @@ const RenderStatusBadge: React.FC<{ status: string }> = ({ status }) => {
 const RefundView: React.FC = () => {
   const { t } = useTranslation('common');
   const { alignLeft, alignRight } = useIsRTL();
-  const { refunds, error } = useRefunds();
+  const { refunds, error } = useRefunds({
+    limit: 10,
+  });
   const refundTableColumns = useMemo(
     () => [
       {
@@ -133,8 +135,8 @@ const RefundView: React.FC = () => {
   );
   if (error) return <ErrorMessage message={error.message} />;
   return (
-    <Card className="w-full overflow-hidden self-stretch min-h-screen lg:min-h-0">
-      <h3 className="text-2xl text-heading font-semibold text-center mb-8">
+    <Card className="min-h-screen w-full self-stretch overflow-hidden lg:min-h-0">
+      <h3 className="mb-8 text-center text-2xl font-semibold text-heading">
         {t('text-my-refunds')}
       </h3>
       <Table

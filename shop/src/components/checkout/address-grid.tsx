@@ -1,14 +1,14 @@
-import { useModalAction } from '@components/ui/modal/modal.context';
-import { Address } from '@framework/types';
+import { useModalAction } from '@/components/ui/modal/modal.context';
 import { RadioGroup } from '@headlessui/react';
 import { useAtom, WritableAtom } from 'jotai';
 import { useEffect } from 'react';
-import AddressCard from '@components/address/address-card';
-import { AddressHeader } from '@components/address/address-header';
+import AddressCard from '@/components/address/address-card';
+import { AddressHeader } from '@/components/address/address-header';
 import { useTranslation } from 'next-i18next';
+import type { Address } from '@/types';
 
 interface AddressesProps {
-  addresses: Address[] | undefined;
+  addresses: Address[] | undefined | null;
   label: string;
   atom: WritableAtom<Address | null, Address>;
   className?: string;
@@ -40,6 +40,7 @@ export const AddressGrid: React.FC<AddressesProps> = ({
       }
     }
   }, [addresses, addresses?.length, selectedAddress?.id, setAddress]);
+
   function onAdd() {
     openModal('ADD_OR_UPDATE_ADDRESS', { customerId: userId, type });
   }
@@ -49,14 +50,20 @@ export const AddressGrid: React.FC<AddressesProps> = ({
   function onDelete(address: any) {
     openModal('DELETE_ADDRESS', { customerId: userId, addressId: address?.id });
   }
+
   return (
     <div className={className}>
       <AddressHeader onAdd={onAdd} count={count} label={label} />
-
-      {addresses && addresses?.length ? (
+      {!addresses?.length ? (
+        <div className="grid grid-cols-1 gap-4">
+          <span className="relative px-5 py-6 text-base text-center bg-gray-100 border rounded border-border-200">
+            {t('text-no-address')}
+          </span>
+        </div>
+      ) : (
         <RadioGroup value={selectedAddress} onChange={setAddress}>
           <RadioGroup.Label className="sr-only">{label}</RadioGroup.Label>
-          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
             {addresses?.map((address) => (
               <RadioGroup.Option value={address} key={address?.id}>
                 {({ checked }: { checked: boolean }) => (
@@ -71,12 +78,6 @@ export const AddressGrid: React.FC<AddressesProps> = ({
             ))}
           </div>
         </RadioGroup>
-      ) : (
-        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-          <span className="relative px-5 py-6 text-base text-center bg-gray-100 rounded border border-border-200">
-            {t('text-no-address')}
-          </span>
-        </div>
       )}
     </div>
   );

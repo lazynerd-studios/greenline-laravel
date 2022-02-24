@@ -1,5 +1,5 @@
-import Button from '@components/ui/button';
-import { useModalAction } from '@components/ui/modal/modal.context';
+import Button from '@/components/ui/button';
+import { useModalAction } from '@/components/ui/modal/modal.context';
 import { useTranslation } from 'next-i18next';
 
 export default function JoinButton() {

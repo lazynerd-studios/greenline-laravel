@@ -1,12 +1,12 @@
-import { Image } from '@components/ui/image';
+import { Image } from '@/components/ui/image';
 import cn from 'classnames';
-import usePrice from '@lib/use-price';
-import { AddToCart } from '@components/products/add-to-cart/add-to-cart';
+import usePrice from '@/lib/use-price';
+import { AddToCart } from '@/components/products/add-to-cart/add-to-cart';
 import { useTranslation } from 'next-i18next';
-import { useModalAction } from '@components/ui/modal/modal.context';
-import { Product } from '@framework/types';
-import { productPlaceholder } from '@lib/placeholders';
-import CartIcon from '@components/icons/cart';
+import { useModalAction } from '@/components/ui/modal/modal.context';
+import { Product } from '@/framework/types';
+import { productPlaceholder } from '@/lib/placeholders';
+import CartIcon from '@/components/icons/cart';
 
 type HeliumProps = {
   product: any;
@@ -61,7 +61,7 @@ const Helium: React.FC<HeliumProps> = ({ product, className }) => {
           className="product-image"
         />
         {discount && (
-          <div className="absolute top-3 end-3 md:top-4 md:end-4 rounded-full text-xs leading-6 font-semibold px-1.5 sm:px-2 md:px-2.5 bg-yellow-500 text-light">
+          <div className="absolute top-3 ltr:right-3 rtl:left-3 md:top-4 ltr:md:right-4 rtl:md:left-4 rounded-full text-xs leading-6 font-semibold px-1.5 sm:px-2 md:px-2.5 bg-yellow-500 text-light">
             {discount}
           </div>
         )}
@@ -97,7 +97,7 @@ const Helium: React.FC<HeliumProps> = ({ product, className }) => {
                   onClick={handleProductQuickView}
                   className="order-5 sm:order-4 py-2 px-3 sm:px-4 border-2 border-border-100 flex items-center justify-center sm:justify-start text-sm font-semibold rounded-full text-accent hover:text-light bg-light hover:bg-accent hover:border-accent transition-colors duration-300 focus:outline-none focus:bg-accent focus:border-accent focus:text-light"
                 >
-                  <CartIcon className="w-4 h-4 me-2" />
+                  <CartIcon className="w-4 h-4 ltr:mr-2 rtl:ml-2" />
                   <span>{t('text-cart')}</span>
                 </button>
               )}

@@ -1,12 +1,12 @@
-import Spinner from '@components/ui/loaders/spinner/spinner';
+import Spinner from '@/components/ui/loaders/spinner/spinner';
 import dynamic from 'next/dynamic';
 import { useTranslation } from 'next-i18next';
 import Details from './details';
 import ShortDetails from './short-details';
-import { stickyShortDetailsAtom } from '@store/sticky-short-details-atom';
+import { stickyShortDetailsAtom } from '@/store/sticky-short-details-atom';
 import { useAtom } from 'jotai';
 import { AttributesProvider } from './attributes.context';
-import useProduct from '@framework/products/use-product';
+import { useProduct } from '@/framework/product';
 
 const RelatedProducts = dynamic(() => import('./related-products'));
 interface ProductPopupProps {
@@ -21,7 +21,7 @@ const Popup: React.FC<ProductPopupProps> = ({ productSlug }) => {
 
   if (isLoading || !product)
     return (
-      <div className="w-96 flex justify-center items-center h-96 bg-light relative">
+      <div className="relative flex items-center justify-center w-96 h-96 bg-light">
         <Spinner text={t('common:text-loading')} />
       </div>
     );

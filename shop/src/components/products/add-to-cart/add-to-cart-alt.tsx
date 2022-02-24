@@ -1,8 +1,8 @@
-import Counter from '@components/ui/counter';
-import { cartAnimation } from '@lib/cart-animation';
-import { useCart } from '@store/quick-cart/cart.context';
-import { generateCartItem } from '@store/quick-cart/generate-cart-item';
-import Button from '@components/ui/button';
+import Counter from '@/components/ui/counter';
+import { cartAnimation } from '@/lib/cart-animation';
+import { useCart } from '@/store/quick-cart/cart.context';
+import { generateCartItem } from '@/store/quick-cart/generate-cart-item';
+import Button from '@/components/ui/button';
 import { useTranslation } from 'next-i18next';
 import { useState } from 'react';
 
@@ -81,7 +81,7 @@ export const AddToCartAlt = ({
   };
   const outOfStock = isInCart(item?.id) && !isInStock(item.id);
   return (
-    <div className=" flex items-center space-s-3">
+    <div className=" flex items-center space-x-3 rtl:space-x-reverse">
       <Counter
         value={quantity}
         onDecrement={decrement}

@@ -1,8 +1,8 @@
 import React, { InputHTMLAttributes, useState } from 'react';
 import cn from 'classnames';
-import Link from '@components/ui/link';
-import { Eye } from '@components/icons/eye-icon';
-import { EyeOff } from '@components/icons/eye-off-icon';
+import Link from '@/components/ui/link';
+import { Eye } from '@/components/icons/eye-icon';
+import { EyeOff } from '@/components/icons/eye-off-icon';
 import { useTranslation } from 'next-i18next';
 
 export interface Props extends InputHTMLAttributes<HTMLInputElement> {
@@ -78,7 +78,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, Props>(
             type={show ? 'text' : 'password'}
             ref={ref}
             className={cn(
-              'py-3 ps-4 pe-11 w-full rounded appearance-none transition duration-300 ease-in-out text-heading text-sm focus:outline-none focus:ring-0',
+              'py-3 ltr:pl-4 rtl:pr-4 ltr:pr-11 rtl:pl-11 w-full rounded appearance-none transition duration-300 ease-in-out text-heading text-sm focus:outline-none focus:ring-0',
               shadow && 'focus:shadow',
               variantClasses[variant],
               inputClassName
@@ -91,7 +91,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, Props>(
           />
           <label
             htmlFor={name}
-            className="absolute end-4 top-5 -mt-2 text-body cursor-pointer"
+            className="absolute ltr:right-4 rtl:left-4 top-5 -mt-2 text-body cursor-pointer"
             onClick={() => setShow((prev) => !prev)}
           >
             {show ? (

@@ -1,34 +1,38 @@
-import SectionBlock from '@components/ui/section-block';
+import SectionBlock from '@/components/ui/section-block';
 import FilterBar from './filter-bar';
-import Categories from '@components/categories/categories';
-import CallToAction from '@components/cta/call-to-action';
-import ProductsGrid from '@components/products/grid';
-import GroupProducts from '@components/products/group-products';
-import PopularProductsGrid from '@components/products/popular-products';
-import TopAuthorsGrid from '@components/author/top-authors-grid';
-import Banner from '@components/banners/banner';
-import TopManufacturersGrid from '@components/manufacturer/top-manufacturers-grid';
+import Categories from '@/components/categories/categories';
+import CallToAction from '@/components/cta/call-to-action';
+import ProductsGrid from '@/components/products/grid';
+import GroupProducts from '@/components/products/group-products';
+import PopularProductsGrid from '@/components/products/popular-products';
+import TopAuthorsGrid from '@/components/author/top-authors-grid';
+import Banner from '@/components/banners/banner';
+import TopManufacturersGrid from '@/components/manufacturer/top-manufacturers-grid';
 import { useTranslation } from 'next-i18next';
-import SellingProductsGrid from '@components/products/selling-products';
+import SellingProductsGrid from '@/components/products/selling-products';
+import type { HomePageProps } from '@/types';
+import ProductGridHome from '../products/grids/home';
 
-const Compact = () => {
+export default function CompactLayout({ variables }: HomePageProps) {
   const { t } = useTranslation('common');
   return (
-    <div className="flex flex-col flex-1 bg-white">
-      <FilterBar className="lg:hidden" />
-      <main className="w-full xl:overflow-hidden block mt-6">
+    <div className="flex flex-1 flex-col bg-white">
+      <FilterBar className="lg:hidden" variables={variables.categories} />
+      <main className="mt-6 block w-full xl:overflow-hidden">
         <SectionBlock>
-          <Banner layout="compact" />
+          <Banner layout="compact" variables={variables.types} />
         </SectionBlock>
-        <PopularProductsGrid limit={10} />
-        <Categories layout="compact" />
+        <PopularProductsGrid variables={variables.popularProducts} />
+        <Categories layout="compact" variables={variables.categories} />
         <GroupProducts />
         <SectionBlock title={t('text-new-arrival')}>
-          <ProductsGrid
-            limit={10}
+          <ProductGridHome
             column="five"
-            sortedBy="DESC"
-            orderBy="created_at"
+            variables={{
+              ...variables.products,
+              sortedBy: 'DESC',
+              orderBy: 'created_at',
+            }}
           />
         </SectionBlock>
         <TopAuthorsGrid />
@@ -38,6 +42,4 @@ const Compact = () => {
       </main>
     </div>
   );
-};
-
-export default Compact;
+}

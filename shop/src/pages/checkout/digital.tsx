@@ -1,13 +1,13 @@
 import dynamic from 'next/dynamic';
 import { useTranslation } from 'next-i18next';
-import { getLayout as getSiteLayout } from '@components/layouts/layout';
-import useUser from '@framework/auth/use-user';
-import Seo from '@components/seo/seo';
-import ContactBox from '@components/checkout/contact/contact-box';
-export { getStaticProps } from '@framework/ssr/common';
+import { getLayout as getSiteLayout } from '@/components/layouts/layout';
+import Seo from '@/components/seo/seo';
+import { useUser } from '@/framework/user';
+import ContactGrid from '@/components/checkout/contact/contact-grid';
+export { getStaticProps } from '@/framework/general.ssr';
 
 const CheckoutCart = dynamic(
-  () => import('@components/checkout/digital/checkout-cart'),
+  () => import('@/components/checkout/digital/checkout-cart'),
   { ssr: false }
 );
 
@@ -18,20 +18,17 @@ const CheckoutDigitalPage = () => {
   return (
     <>
       <Seo noindex={true} nofollow={true} />
-      <div className="px-4 py-8 bg-gray-100 lg:py-10 lg:px-8 xl:py-14 xl:px-16 2xl:px-20">
-        <div className="flex flex-col w-full max-w-xl m-auto">
-          <ContactBox
-            label={t('text-contact-number')}
+      <div className="bg-gray-100 px-4 py-8 lg:py-10 lg:px-8 xl:py-14 xl:px-16 2xl:px-20">
+        <div className="m-auto flex w-full max-w-xl flex-col">
+          <ContactGrid
+            className="bg-light p-5 shadow-700 md:p-8"
             contact={me?.profile?.contact}
-            className="w-full lg:max-w-2xl"
+            label={t('text-contact-number')}
           />
-          {/* </div> */}
-
-          <div className="w-full mt-3 bg-white">
-            <span className="w-full border-b border-gray-100 block text-lg lg:text-2xl text-gray-800 font-semibold capitalize mb-[1px] py-7 px-8">
+          <div className="mt-3 w-full bg-white">
+            <span className="mb-[1px] block w-full border-b border-gray-100 py-7 px-8 text-lg font-semibold capitalize text-gray-800 lg:text-2xl">
               {t('text-your-order')}
             </span>
-
             <div className="w-full px-8 py-7">
               <CheckoutCart hideTitle={true} />
             </div>
@@ -44,7 +41,7 @@ const CheckoutDigitalPage = () => {
 const getLayout = (page: React.ReactElement) =>
   getSiteLayout(<div className="min-h-screen bg-gray-100">{page}</div>);
 
-CheckoutDigitalPage.authenticate = true;
+CheckoutDigitalPage.authenticationRequired = true;
 
 CheckoutDigitalPage.getLayout = getLayout;
 export default CheckoutDigitalPage;

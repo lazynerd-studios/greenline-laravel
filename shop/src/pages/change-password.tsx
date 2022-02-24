@@ -1,10 +1,9 @@
-import Card from '@components/ui/cards/card';
+import Card from '@/components/ui/cards/card';
 import { useTranslation } from 'next-i18next';
-import DashboardSidebar from '@components/dashboard/sidebar';
-import ChangePassword from '@framework/auth/change-password';
-import { getLayout as getSiteLayout } from '@components/layouts/layout';
-import Seo from '@components/seo/seo';
-export { getStaticProps } from '@framework/ssr/common';
+import Seo from '@/components/seo/seo';
+import ChangePasswordForm from '@/components/auth/change-password-form';
+import DashboardLayout from '@/layouts/_dashboard';
+export { getStaticProps } from '@/framework/general.ssr';
 
 const ChangePasswordPage = () => {
   const { t } = useTranslation('common');
@@ -13,25 +12,18 @@ const ChangePasswordPage = () => {
     <>
       <Seo noindex={true} nofollow={true} />
       <Card className="w-full">
-        <h1 className="mb-5 sm:mb-8 text-lg sm:text-xl text-heading font-semibold">
+        <h1 className="mb-5 text-lg font-semibold text-heading sm:mb-8 sm:text-xl">
           {t('change-password')}
         </h1>
-        <ChangePassword />
+        <ChangePasswordForm />
       </Card>
     </>
   );
 };
-const getLayout = (page: React.ReactElement) =>
-  getSiteLayout(
-    <div className="min-h-screen transition-colors duration-150 bg-gray-100">
-      <div className="flex flex-col lg:flex-row items-start max-w-1920 w-full mx-auto py-10 px-8 xl:py-14 xl:px-16 2xl:px-20 bg-gray-100">
-        <DashboardSidebar className="flex-shrink-0 hidden lg:block lg:w-80 me-10" />
-        {page}
-      </div>
-    </div>
-  );
+ChangePasswordPage.authenticationRequired = true;
 
-ChangePasswordPage.authenticate = true;
+ChangePasswordPage.getLayout = function getLayout(page: React.ReactElement) {
+  return <DashboardLayout>{page}</DashboardLayout>;
+};
 
-ChangePasswordPage.getLayout = getLayout;
 export default ChangePasswordPage;

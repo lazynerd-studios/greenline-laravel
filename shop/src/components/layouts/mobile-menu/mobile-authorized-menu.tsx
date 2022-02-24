@@ -1,11 +1,10 @@
-import { siteSettings } from '@settings/site';
+import { siteSettings } from '@/settings/site';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
-import DrawerWrapper from '@components/ui/drawer/drawer-wrapper';
+import DrawerWrapper from '@/components/ui/drawer/drawer-wrapper';
 import { useAtom } from 'jotai';
-import { drawerAtom } from '@store/drawer-atom';
-import useUser from '@framework/auth/use-user';
-import { ROUTES } from '@lib/routes';
+import { drawerAtom } from '@/store/drawer-atom';
+import { useUser } from '@/framework/user';
 
 export default function MobileAuthorizedMenu() {
   const { t } = useTranslation('common');
@@ -19,15 +18,15 @@ export default function MobileAuthorizedMenu() {
   return (
     <DrawerWrapper>
       <ul className="flex-grow">
-        <li className="flex justify-between items-center w-full pt-3 px-5 md:px-8 text-sm text-start font-semibold capitalize text-body focus:outline-none border-t border-dashed border-border-200 bg-gray-100">
+        <li className="flex items-center justify-between w-full px-5 pt-3 text-sm font-semibold capitalize bg-gray-100 border-t border-dashed md:px-8 ltr:text-left rtl:text-right text-body focus:outline-none border-border-200">
           <span>{t('text-total-points')}</span>
           <span>{me?.wallet?.total_points ?? 0}</span>
         </li>
-        <li className="flex justify-between items-center w-full pt-3 px-5 md:px-8 text-sm text-start font-semibold capitalize text-body focus:outline-none bg-gray-100">
+        <li className="flex items-center justify-between w-full px-5 pt-3 text-sm font-semibold capitalize bg-gray-100 md:px-8 ltr:text-left rtl:text-right text-body focus:outline-none">
           <span>{t('text-points-used')}</span>
           <span>{me?.wallet?.points_used ?? 0}</span>
         </li>
-        <li className="flex justify-between items-center w-full py-3 px-5 md:px-8 text-sm text-start font-semibold capitalize text-body focus:outline-none border-b border-dashed border-border-200 bg-gray-100">
+        <li className="flex items-center justify-between w-full px-5 py-3 text-sm font-semibold capitalize bg-gray-100 border-b border-dashed md:px-8 ltr:text-left rtl:text-right text-body focus:outline-none border-border-200">
           <span>{t('text-available-points')}</span>
           <span>{me?.wallet?.available_points ?? 0}</span>
         </li>
@@ -35,7 +34,7 @@ export default function MobileAuthorizedMenu() {
         {siteSettings.authorizedLinksMobile.map(({ href, label }) => (
           <li key={`${href}${label}`}>
             <span
-              className="block py-3 px-5 md:px-8 text-sm font-semibold capitalize text-heading transition duration-200 hover:text-accent cursor-pointer"
+              className="block px-5 py-3 text-sm font-semibold capitalize transition duration-200 cursor-pointer md:px-8 text-heading hover:text-accent"
               onClick={() => handleClick(href)}
             >
               {t(label)}

@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import Portal from '@reach/portal';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -7,10 +7,10 @@ import {
   clearAllBodyScrollLocks,
 } from 'body-scroll-lock';
 import cn from 'classnames';
-import Scrollbar from '@components/ui/scrollbar';
-import { fadeInRight } from '@lib/motion/fade-in-right';
-import { fadeInLeft } from '@lib/motion/fade-in-left';
-import { fadeInOut } from '@lib/motion/fade-in-out';
+import Scrollbar from '@/components/ui/scrollbar';
+import { fadeInRight } from '@/lib/motion/fade-in-right';
+import { fadeInLeft } from '@/lib/motion/fade-in-left';
+import { fadeInOut } from '@/lib/motion/fade-in-out';
 
 interface DrawerProps {
   children: any;
@@ -21,7 +21,7 @@ interface DrawerProps {
 }
 type DivElementRef = React.MutableRefObject<HTMLDivElement>;
 
-const Drawer: FC<DrawerProps> = ({
+const Drawer: React.FC<DrawerProps> = ({
   children,
   open = false,
   variant = 'right',
@@ -70,7 +70,7 @@ const Drawer: FC<DrawerProps> = ({
             animate="to"
             exit="from"
             variants={variant === 'right' ? fadeInRight() : fadeInLeft()}
-            className="fixed inset-0 overflow-hidden h-full z-50"
+            className="fixed inset-0 z-50 h-full overflow-hidden"
           >
             <div className="absolute inset-0 overflow-hidden">
               <motion.div
@@ -86,13 +86,15 @@ const Drawer: FC<DrawerProps> = ({
               />
               <div
                 className={cn(
-                  'absolute inset-y-0 max-w-full flex outline-none',
-                  variant === 'right' ? 'end-0' : 'start-0'
+                  'absolute inset-y-0 flex max-w-full outline-none',
+                  variant === 'right'
+                    ? 'ltr:right-0 rtl:left-0'
+                    : 'ltr:left-0 rtl:right-0'
                 )}
               >
                 <div className="h-full w-screen max-w-md">
-                  <div className="h-full flex flex-col text-base bg-light shadow-xl drawer">
-                    <Scrollbar className="w-full h-full">{children}</Scrollbar>
+                  <div className="drawer flex h-full flex-col bg-light text-base shadow-xl">
+                    <Scrollbar className="h-full w-full">{children}</Scrollbar>
                   </div>
                 </div>
               </div>

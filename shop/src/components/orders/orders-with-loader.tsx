@@ -1,7 +1,7 @@
-import Button from '@components/ui/button';
-import Spinner from '@components/ui/loaders/spinner/spinner';
-import NotFound from '@components/ui/not-found';
-import Scrollbar from '@components/ui/scrollbar';
+import Button from '@/components/ui/button';
+import Spinner from '@/components/ui/loaders/spinner/spinner';
+import NotFound from '@/components/ui/not-found';
+import Scrollbar from '@/components/ui/scrollbar';
 import { useTranslation } from 'next-i18next';
 import OrderDetails from './order-details';
 
@@ -25,14 +25,14 @@ const OrdersWithLoader: React.FC<OrdersWithLoaderProps> = ({
 }) => {
   const { t } = useTranslation('common');
   return (
-    <div className="w-full hidden overflow-hidden lg:flex">
+    <div className="hidden w-full overflow-hidden lg:flex">
       {/* Order List */}
       <div
-        className="pe-5 lg:pe-8 w-full md:w-1/3"
+        className="w-full ltr:pr-5 rtl:pl-5 md:w-1/3 ltr:lg:pr-8 rtl:lg:pl-8"
         style={{ height: 'calc(100vh - 60px)' }}
       >
-        <div className="flex flex-col h-full pb-5 md:border md:border-border-200">
-          <h3 className="text-xl font-semibold py-5 text-heading px-5">
+        <div className="flex h-full flex-col bg-white pb-5 md:border md:border-border-200">
+          <h3 className="py-5 px-5 text-xl font-semibold text-heading">
             {t('profile-sidebar-orders')}
           </h3>
           <Scrollbar className="w-full" style={{ height: 'calc(100% - 80px)' }}>
@@ -44,11 +44,11 @@ const OrdersWithLoader: React.FC<OrdersWithLoaderProps> = ({
               <div className="px-5">
                 {children}
                 {hasNextPage && (
-                  <div className="flex justify-center mt-8 lg:mt-12">
+                  <div className="mt-8 flex justify-center lg:mt-12">
                     <Button
                       loading={isLoadingMore}
                       onClick={onLoadMore}
-                      className="text-sm md:text-base font-semibold h-11"
+                      className="h-11 text-sm font-semibold md:text-base"
                     >
                       {t('text-load-more')}
                     </Button>
@@ -57,8 +57,8 @@ const OrdersWithLoader: React.FC<OrdersWithLoaderProps> = ({
               </div>
             )}
             {notFound && (
-              <div className="w-full h-full flex items-center justify-center my-auto">
-                <h4 className="text-sm font-semibold text-body text-center">
+              <div className="my-auto flex h-full w-full items-center justify-center">
+                <h4 className="text-center text-sm font-semibold text-body">
                   {t('error-no-orders')}
                 </h4>
               </div>
@@ -70,7 +70,7 @@ const OrdersWithLoader: React.FC<OrdersWithLoaderProps> = ({
       {Boolean(order) ? (
         <OrderDetails order={order} />
       ) : (
-        <div className="max-w-lg mx-auto">
+        <div className="mx-auto max-w-lg bg-white">
           <NotFound text="text-no-order-found" />
         </div>
       )}

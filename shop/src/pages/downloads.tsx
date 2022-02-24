@@ -1,10 +1,10 @@
-import Card from '@components/ui/cards/card';
+import Card from '@/components/ui/cards/card';
 import { useTranslation } from 'next-i18next';
-import DashboardSidebar from '@components/dashboard/sidebar';
-import { getLayout as getSiteLayout } from '@components/layouts/layout';
-import DownloadableProducts from '@components/products/downloadable-products';
-import Seo from '@components/seo/seo';
-export { getStaticProps } from '@framework/ssr/common';
+import DownloadableProducts from '@/components/products/downloadable-products';
+import Seo from '@/components/seo/seo';
+import DashboardLayout from '@/layouts/_dashboard';
+
+export { getStaticProps } from '@/framework/general.ssr';
 
 const DownloadableProductsPage = () => {
   const { t } = useTranslation('common');
@@ -13,7 +13,7 @@ const DownloadableProductsPage = () => {
     <>
       <Seo noindex={true} nofollow={true} />
       <Card className="w-full shadow-none sm:shadow">
-        <h1 className="mb-8 sm:mb-10 text-lg sm:text-xl text-heading font-semibold text-center">
+        <h1 className="mb-8 text-center text-lg font-semibold text-heading sm:mb-10 sm:text-xl">
           {t('text-downloads')}
         </h1>
         <DownloadableProducts />
@@ -21,17 +21,13 @@ const DownloadableProductsPage = () => {
     </>
   );
 };
-const getLayout = (page: React.ReactElement) =>
-  getSiteLayout(
-    <div className="min-h-screen transition-colors duration-150 bg-white sm:bg-gray-100">
-      <div className="flex flex-col lg:flex-row items-start max-w-1920 w-full mx-auto sm:py-10 sm:px-8 xl:py-14 xl:px-16 2xl:px-20 bg-gray-100">
-        <DashboardSidebar className="flex-shrink-0 hidden lg:block lg:w-80 me-10" />
-        {page}
-      </div>
-    </div>
-  );
 
-// DownloadableProductsPage.authenticate = true;
+DownloadableProductsPage.authenticationRequired = true;
 
-DownloadableProductsPage.getLayout = getLayout;
+DownloadableProductsPage.getLayout = function getLayout(
+  page: React.ReactElement
+) {
+  return <DashboardLayout>{page}</DashboardLayout>;
+};
+
 export default DownloadableProductsPage;

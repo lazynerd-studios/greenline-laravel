@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
 import { cartReducer, State, initialState } from './cart.reducer';
 import { Item, getItem, inStock } from './cart.utils';
-import { useLocalStorage } from '@lib/use-local-storage';
-import { CART_KEY } from '@lib/constants';
+import { useLocalStorage } from '@/lib/use-local-storage';
+import { CART_KEY } from '@/lib/constants';
 import { useAtom } from 'jotai';
-import { verifiedResponseAtom } from '@store/checkout';
+import { verifiedResponseAtom } from '@/store/checkout';
 interface CartProviderState extends State {
   addItemToCart: (item: Item, quantity: number) => void;
   removeItemFromCart: (id: Item['id']) => void;
@@ -25,7 +25,7 @@ export const useCart = () => {
   if (context === undefined) {
     throw new Error(`useCart must be used within a CartProvider`);
   }
-  return context;
+  return React.useMemo(() => context, [context]);
 };
 
 export const CartProvider: React.FC = (props) => {
@@ -35,7 +35,7 @@ export const CartProvider: React.FC = (props) => {
   );
   const [state, dispatch] = React.useReducer(
     cartReducer,
-    JSON.parse(savedCart!)
+    savedCart ? JSON.parse(savedCart) : initialState
   );
   const [, emptyVerifiedResponse] = useAtom(verifiedResponseAtom);
   React.useEffect(() => {

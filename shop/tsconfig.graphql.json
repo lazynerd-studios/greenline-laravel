@@ -16,15 +16,12 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "paths": {
-      "@assets/*": ["src/assets/*"],
-      "@components/*": ["src/components/*"],
-      "@lib/*": ["src/lib/*"],
-      "@store/*": ["src/store/*"],
-      "@settings/*": ["src/settings/*"],
-      "@framework/*": ["src/framework/graphql/*"]
+      "@/*": ["src/*"],
+      "@/framework/*": ["src/framework/graphql/*"],
+      "@/framework/static/*": ["src/framework/static/*"]
     },
     "incremental": true
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "./src/framework/rest"]
+  "exclude": ["node_modules", "src/framework/rest"]
 }

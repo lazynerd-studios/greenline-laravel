@@ -1,48 +1,53 @@
-import Button from '@components/ui/button';
-import Card from '@components/ui/cards/card';
-import FileInput from '@components/ui/forms/file-input';
-import Input from '@components/ui/forms/input';
-import TextArea from '@components/ui/forms/text-area';
+import Button from '@/components/ui/button';
+import Card from '@/components/ui/cards/card';
+import FileInput from '@/components/ui/forms/file-input';
+import Input from '@/components/ui/forms/input';
+import TextArea from '@/components/ui/forms/text-area';
 import { useTranslation } from 'next-i18next';
 import pick from 'lodash/pick';
-import { Form } from '@components/ui/forms/form';
+import { Form } from '@/components/ui/forms/form';
+import { useUpdateUser } from '@/framework/user';
+import type { UpdateUserInput, User } from '@/types';
 
-interface Props {
-  // user: User;
-}
-
-type UserFormValues = {
-  name?: string;
-  // profile?: User['profile'];
-};
-
-const ProfileForm: React.FC<any> = ({ user, loading, onSubmit }) => {
+const ProfileForm = ({ user }: { user: User }) => {
   const { t } = useTranslation('common');
+  const { mutate: updateProfile, isLoading } = useUpdateUser();
+
+  function onSubmit(values: UpdateUserInput) {
+    console.log(values, 'values');
+    if (!user) {
+      return false;
+    }
+    updateProfile({
+      id: user.id,
+      name: values.name,
+      profile: {
+        id: user?.profile?.id,
+        bio: values?.profile?.bio ?? '',
+        //@ts-ignore
+        avatar: values?.profile?.avatar?.[0],
+      },
+    });
+  }
 
   return (
-    <Form<UserFormValues>
+    <Form<UpdateUserInput>
       onSubmit={onSubmit}
-      options={{
-        defaultValues: {
-          ...(user &&
-            pick(user, [
-              'name',
-              'profile.bio',
-              // 'profile.contact',
-              'profile.avatar',
-            ])),
-        },
+      useFormProps={{
+        ...(user && {
+          defaultValues: pick(user, ['name', 'profile.bio', 'profile.avatar']),
+        }),
       }}
     >
       {({ register, control }) => (
         <>
-          <div className="flex mb-8">
+          <div className="mb-8 flex">
             <Card className="w-full">
               <div className="mb-8">
                 <FileInput control={control} name="profile.avatar" />
               </div>
 
-              <div className="flex flex-row mb-6">
+              <div className="mb-6 flex flex-row">
                 <Input
                   className="flex-1"
                   label={t('text-name')}
@@ -61,9 +66,9 @@ const ProfileForm: React.FC<any> = ({ user, loading, onSubmit }) => {
 
               <div className="flex">
                 <Button
-                  className="ms-auto"
-                  loading={loading}
-                  disabled={loading}
+                  className="ltr:ml-auto rtl:mr-auto"
+                  loading={isLoading}
+                  disabled={isLoading}
                 >
                   {t('text-save')}
                 </Button>

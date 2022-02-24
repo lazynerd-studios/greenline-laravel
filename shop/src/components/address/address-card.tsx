@@ -1,7 +1,7 @@
-import { CloseIcon } from '@components/icons/close-icon';
-import { PencilIcon } from '@components/icons/pencil-icon';
-import { useModalAction } from '@components/ui/modal/modal.context';
-import { formatAddress } from '@lib/format-address';
+import { CloseIcon } from '@/components/icons/close-icon';
+import { PencilIcon } from '@/components/icons/pencil-icon';
+import { useModalAction } from '@/components/ui/modal/modal.context';
+import { formatAddress } from '@/lib/format-address';
 import classNames from 'classnames';
 import { useTranslation } from 'next-i18next';
 
@@ -35,7 +35,7 @@ const AddressCard: React.FC<AddressProps> = ({
       <p className="text-sm text-sub-heading">
         {formatAddress(address?.address)}
       </p>
-      <div className="absolute top-4 end-4 flex space-s-2 opacity-0 group-hover:opacity-100">
+      <div className="absolute top-4 ltr:right-4 rtl:left-4 flex space-x-2 rtl:space-x-reverse opacity-0 group-hover:opacity-100">
         {onEdit && (
           <button
             className="flex items-center justify-center w-5 h-5 rounded-full bg-accent text-light"

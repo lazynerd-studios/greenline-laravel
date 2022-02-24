@@ -1,19 +1,19 @@
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import cn from 'classnames';
-import { AddToCart } from '@components/products/add-to-cart/add-to-cart';
-import usePrice from '@lib/use-price';
-import { getVariations } from '@lib/get-variations';
+import { AddToCart } from '@/components/products/add-to-cart/add-to-cart';
+import usePrice from '@/lib/use-price';
+import { getVariations } from '@/lib/get-variations';
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
 import VariationPrice from './variation-price';
 import { useTranslation } from 'next-i18next';
-import { ROUTES } from '@lib/routes';
-import { useModalAction } from '@components/ui/modal/modal.context';
+import { ROUTES } from '@/lib/routes';
+import { useModalAction } from '@/components/ui/modal/modal.context';
 import VariationGroups from './variation-groups';
-import { Product } from '@framework/types';
-import { productPlaceholder } from '@lib/placeholders';
-import { isVariationSelected } from '@lib/is-variation-selected';
+import { Product } from '@/framework/types';
+import { productPlaceholder } from '@/lib/placeholders';
+import { isVariationSelected } from '@/lib/is-variation-selected';
 import { useMemo } from 'react';
 import { useAttributes } from './attributes.context';
 
@@ -71,7 +71,7 @@ const ShortDetails: React.FC<ShortDetailsProps> = ({ product, isSticky }) => {
       <div className="flex items-center">
         <div
           className={cn(
-            'border border-border-200 border-opacity-70 rounded relative flex items-center justify-center overflow-hidden flex-shrink-0',
+            'border border-border-200 border-opacity-70 rounded relative flex items-center justify-center overflow-hidden shrink-0',
             {
               'w-28 h-28': !hasVariations,
               'w-40 lg:w-52 h-40 lg:h-52': hasVariations,
@@ -87,7 +87,7 @@ const ShortDetails: React.FC<ShortDetailsProps> = ({ product, isSticky }) => {
           />
         </div>
 
-        <div className="px-8 flex flex-col justify-center me-auto overflow-hidden">
+        <div className="px-8 flex flex-col justify-center ltr:mr-auto rtl:ml-auto overflow-hidden">
           <h3
             className="font-semibold text-lg lg:text-xl tracking-tight text-heading truncate cursor-pointer transition-colors hover:text-accent"
             onClick={() => navigate(`${ROUTES.PRODUCT}/${slug}`)}
@@ -114,18 +114,18 @@ const ShortDetails: React.FC<ShortDetailsProps> = ({ product, isSticky }) => {
         </div>
 
         <div
-          className={cn('w-full flex flex-shrink-0', {
+          className={cn('w-full flex shrink-0', {
             'max-w-max': !hasVariations,
             'max-w-[40%]': hasVariations,
           })}
         >
           {!hasVariations && (
-            <span className="me-8 flex items-center ">
+            <span className="ltr:mr-8 rtl:ml-8 flex items-center ">
               <ins className="text-xl lg:text-2xl font-semibold text-accent no-underline">
                 {price}
               </ins>
               {basePrice && (
-                <del className="text-sm lg:text-base font-normal text-muted ms-2">
+                <del className="text-sm lg:text-base font-normal text-muted ltr:ml-2 rtl:mr-2">
                   {basePrice}
                 </del>
               )}

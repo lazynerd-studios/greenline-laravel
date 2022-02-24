@@ -1,13 +1,13 @@
 import { useRouter } from 'next/router';
 import cn from 'classnames';
 import { useTranslation } from 'next-i18next';
-import Scrollbar from '@components/ui/scrollbar';
-import Link from '@components/ui/link';
-import { Image } from '@components/ui/image';
-import { productPlaceholder } from '@lib/placeholders';
-import { ROUTES } from '@lib/routes';
+import Scrollbar from '@/components/ui/scrollbar';
+import Link from '@/components/ui/link';
+import { Image } from '@/components/ui/image';
+import { productPlaceholder } from '@/lib/placeholders';
+import { ROUTES } from '@/lib/routes';
 import { Transition } from '@headlessui/react';
-import Spinner from '@components/ui/loaders/spinner/spinner';
+import Spinner from '@/components/ui/loaders/spinner/spinner';
 
 type Props = {
   className?: string;
@@ -86,7 +86,7 @@ const AutoSuggestion: React.FC<Props> = ({
                       />
                     </div>
 
-                    <span className="text-sm font-semibold text-heading ml-3">
+                    <span className="text-sm font-semibold text-heading ltr:ml-3 rtl:mr-3">
                       {item?.name}
                     </span>
                   </div>

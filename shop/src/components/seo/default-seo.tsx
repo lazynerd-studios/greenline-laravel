@@ -1,8 +1,8 @@
-import { useSettings } from '@components/settings/settings.context';
+import { useSettings } from '@/framework/settings';
 import { DefaultSeo as NextDefaultSeo } from 'next-seo';
 
 const DefaultSeo = () => {
-  const settings = useSettings();
+  const { settings } = useSettings();
   return (
     <NextDefaultSeo
       additionalMetaTags={[

@@ -1,15 +1,15 @@
 import cn from 'classnames';
-import { avatarPlaceholder } from '@lib/placeholders';
+import { avatarPlaceholder } from '@/lib/placeholders';
 import { useTranslation } from 'next-i18next';
-import { Image } from '@components/ui/image';
-import Link from '@components/ui/link';
-import { ROUTES } from '@lib/routes';
-import { formatAddress } from '@lib/format-address';
+import { Image } from '@/components/ui/image';
+import Link from '@/components/ui/link';
+import { ROUTES } from '@/lib/routes';
+import { formatAddress } from '@/lib/format-address';
 import { isEmpty } from 'lodash';
 import React from 'react';
-import { MapPin } from '@components/icons/map-pin';
-import { getIcon } from '@lib/get-icon';
-import * as socialIcons from '@components/icons/social';
+import { MapPin } from '@/components/icons/map-pin';
+import { getIcon } from '@/lib/get-icon';
+import * as socialIcons from '@/components/icons/social';
 
 interface ManufacturerProps {
   item: any;
@@ -30,7 +30,7 @@ const ManufacturerCard: React.FC<ManufacturerProps> = ({ item, className }) => {
     >
       <span
         className={cn(
-          'w-16 h-16 relative flex flex-shrink-0 items-center justify-center bg-gray-300 rounded-full overflow-hidden'
+          'w-16 h-16 relative flex shrink-0 items-center justify-center bg-gray-300 rounded-full overflow-hidden'
         )}
       >
         <Image
@@ -40,18 +40,12 @@ const ManufacturerCard: React.FC<ManufacturerProps> = ({ item, className }) => {
           objectFit="cover"
         />
       </span>
-      <div className="flex flex-col ms-4 overflow-hidden">
+      <div className="flex flex-col ltr:ml-4 rtl:mr-4 overflow-hidden">
         <span className="text-lg font-semibold text-heading mb-2 transition-colors hover:text-orange-500 truncate">
           {item?.name}
         </span>
-        {/* <span className="text-xs text-body flex">
-          <MapPin className="w-3.5 h-3.5 me-1 text-muted flex-shrink-0" />
-          {!isEmpty(formatAddress(item?.address))
-            ? formatAddress(item?.address)
-            : t('common:text-no-address')}
-        </span> */}
         {!isEmpty(item?.socials) ? (
-          <div className="flex items-center space-s-3 mt-1.5">
+          <div className="flex items-center space-x-3 rtl:space-x-reverse mt-1.5 ltr:ml-1 rtl:mr-1">
             {item?.socials?.map((item: any, index: number) => (
               <a
                 key={index}
@@ -72,7 +66,7 @@ const ManufacturerCard: React.FC<ManufacturerProps> = ({ item, className }) => {
           // <span className="text-xs text-body flex">
           //   {t('common:text-no-address')}
           // </span>
-          <div className="flex items-center space-s-3 mt-1.5">
+          <div className="flex items-center space-x-3 rtl:space-x-reverse mt-1.5">
             <a
               href="/"
               target="_blank"

@@ -1,4 +1,4 @@
-import usePrice from '@lib/use-price';
+import usePrice from '@/lib/use-price';
 import cn from 'classnames';
 import { useTranslation } from 'next-i18next';
 interface Props {

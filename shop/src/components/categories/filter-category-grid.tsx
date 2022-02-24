@@ -1,16 +1,15 @@
 import cn from 'classnames';
-import NotFound from '@components/ui/not-found';
-import { Category } from '@framework/types';
-import CategoriesLoader from '@components/ui/loaders/categories-loader';
-import CategoryCard from '@components/ui/category-card';
+import NotFound from '@/components/ui/not-found';
+import CategoriesLoader from '@/components/ui/loaders/categories-loader';
+import CategoryCard from '@/components/ui/category-card';
 import { useRouter } from 'next/router';
-import CategoryBreadcrumb from '@components/ui/category-breadcrumb-card';
-import Scrollbar from '@components/ui/scrollbar';
+import CategoryBreadcrumb from '@/components/ui/category-breadcrumb-card';
+import Scrollbar from '@/components/ui/scrollbar';
 import isEmpty from 'lodash/isEmpty';
 import { useTranslation } from 'next-i18next';
-import findNestedData from '@lib/find-nested-data';
-// import Products from '@framework/products/products';
-import ProductsGrid from '@components/products/grid';
+import findNestedData from '@/lib/find-nested-data';
+import type { Category } from '@/types';
+import ProductGridHome from '@/components/products/grids/home';
 
 function findParentCategories(
   treeItems: any[],
@@ -36,11 +35,13 @@ interface FilterCategoryGridProps {
   loading: boolean;
   categories: Category[];
   className?: string;
+  variables: any;
 }
 const FilterCategoryGrid: React.FC<FilterCategoryGridProps> = ({
   notFound,
   categories,
   loading,
+  variables,
 }) => {
   const { t } = useTranslation('common');
 
@@ -73,7 +74,7 @@ const FilterCategoryGrid: React.FC<FilterCategoryGridProps> = ({
   if (loading) {
     return (
       <div className="hidden xl:block">
-        <div className="w-72 mt-8 px-2">
+        <div className="mt-8 w-72 px-2">
           <CategoriesLoader />
         </div>
       </div>
@@ -90,12 +91,12 @@ const FilterCategoryGrid: React.FC<FilterCategoryGridProps> = ({
   }
   return (
     <div className="bg-light">
-      <div className="pt-3 md:pt-6 lg:pt-10 2xl:pt-14 px-3 md:px-6 lg:px-10 2xl:px-14">
+      <div className="px-3 pt-3 md:px-6 md:pt-6 lg:px-10 lg:pt-10 2xl:px-14 2xl:pt-14">
         {query?.category ? (
           <Scrollbar className="w-full">
             <div
-              className={cn('pt-2 px-2 pb-7', {
-                'border-b border-dashed divide-dashed border-gray-200 mb-8':
+              className={cn('px-2 pt-2 pb-7', {
+                'mb-8 divide-dashed border-b border-dashed border-gray-200':
                   query?.category,
               })}
             >
@@ -105,14 +106,14 @@ const FilterCategoryGrid: React.FC<FilterCategoryGridProps> = ({
             </div>
           </Scrollbar>
         ) : (
-          <h3 className="text-heading font-semibold text-2xl mb-8 px-2 pt-2">
+          <h3 className="mb-8 px-2 pt-2 text-2xl font-semibold text-heading">
             {t('text-all-categories')}
           </h3>
         )}
       </div>
 
-      <div className="p-5 md:p-8 lg:p-12 2xl:p-16 !pt-0">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-6 gap-6">
+      <div className="p-5 !pt-0 md:p-8 lg:p-12 2xl:p-16">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-6">
           {Array.isArray(renderCategories) &&
             renderCategories?.map((item: any, idx: number) => (
               <CategoryCard
@@ -124,9 +125,9 @@ const FilterCategoryGrid: React.FC<FilterCategoryGridProps> = ({
         </div>
         {/* {isEmpty(renderCategories) && <Products layout="minimal" />} */}
         {isEmpty(renderCategories) && (
-          <ProductsGrid
-            limit={30}
+          <ProductGridHome
             gridClassName="!grid-cols-[repeat(auto-fill,minmax(290px,1fr))]"
+            variables={variables}
           />
         )}
       </div>

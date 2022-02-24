@@ -1,8 +1,8 @@
 import cn from 'classnames';
-import { Image } from '@components/ui/image';
-import { Banner } from '@framework/types';
-import { productPlaceholder } from '@lib/placeholders';
-import SearchWithSuggestion from '@components/ui/search/search-with-suggestion';
+import { Image } from '@/components/ui/image';
+import { Banner } from '@/framework/types';
+import { productPlaceholder } from '@/lib/placeholders';
+import SearchWithSuggestion from '@/components/ui/search/search-with-suggestion';
 
 interface BannerProps {
   banners: Banner[] | undefined;

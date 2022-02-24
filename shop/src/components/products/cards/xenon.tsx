@@ -1,11 +1,11 @@
-import { Image } from '@components/ui/image';
+import { Image } from '@/components/ui/image';
 import cn from 'classnames';
-import usePrice from '@lib/use-price';
-import { AddToCart } from '@components/products/add-to-cart/add-to-cart';
+import usePrice from '@/lib/use-price';
+import { AddToCart } from '@/components/products/add-to-cart/add-to-cart';
 import { useTranslation } from 'next-i18next';
-import { PlusIcon } from '@components/icons/plus-icon';
-import { useModalAction } from '@components/ui/modal/modal.context';
-import { productPlaceholder } from '@lib/placeholders';
+import { PlusIcon } from '@/components/icons/plus-icon';
+import { useModalAction } from '@/components/ui/modal/modal.context';
+import { productPlaceholder } from '@/lib/placeholders';
 
 type XenonProps = {
   product: any;
@@ -52,7 +52,7 @@ const Xenon: React.FC<XenonProps> = ({ product, className }) => {
           className="product-image"
         />
         {discount && (
-          <div className="absolute top-3 start-3 md:top-4 md:start-4 rounded text-xs leading-6 font-semibold px-1.5  md:px-2 lg:px-2.5 bg-accent text-light">
+          <div className="absolute top-3 ltr:left-3 rtl:right-3 md:top-4 ltr:md:left-4 rtl:md:right-4 rounded text-xs leading-6 font-semibold px-1.5 md:px-2 lg:px-2.5 bg-accent text-light">
             {discount}
           </div>
         )}
@@ -99,7 +99,7 @@ const Xenon: React.FC<XenonProps> = ({ product, className }) => {
                   {price}
                 </span>
                 {basePrice && (
-                  <del className="text-xs text-muted mt-1 md:mt-0 md:ms-2">
+                  <del className="text-xs text-muted mt-1 md:mt-0 ltr:md:ml-2 rtl:md:mr-2">
                     {basePrice}
                   </del>
                 )}
@@ -109,7 +109,7 @@ const Xenon: React.FC<XenonProps> = ({ product, className }) => {
                 <AddToCart
                   variant="argon"
                   data={product}
-                  counterClass="absolute sm:static bottom-3 end-3 sm:bottom-0 sm:end-0"
+                  counterClass="absolute sm:static bottom-3 ltr:right-3 rtl:left-3 sm:bottom-0 ltr:sm:right-0 rtl:sm:left-0"
                 />
               )}
             </>

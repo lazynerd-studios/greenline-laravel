@@ -54,10 +54,10 @@ export const selectStyles = {
     boxShadow:
       '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
   }),
-  valueContainer: (provided: any, _: any) => ({
+  valueContainer: (provided: any, state: any) => ({
     ...provided,
-    paddingLeft: 16,
-    paddingRight: 4,
+    paddingLeft: state.isRtl ? 4 : 16,
+    paddingRight: state.isRtl ? 16 : 4,
   }),
   singleValue: (provided: any, _: any) => ({
     ...provided,

@@ -1,9 +1,9 @@
 import { useRef, useState, useEffect } from 'react';
-import { Image } from '@components/ui/image';
+import { Image } from '@/components/ui/image';
 import cn from 'classnames';
 import CopyToClipboard from 'react-copy-to-clipboard';
 import { useTranslation } from 'next-i18next';
-import { couponPlaceholder } from '@lib/placeholders';
+import { couponPlaceholder } from '@/lib/placeholders';
 
 type CouponCardProps = {
   coupon?: any;
@@ -58,14 +58,14 @@ const CouponCard: React.FC<CouponCardProps> = ({ coupon, className }) => {
                   }))
                 }
               >
-                <button className="text-end text-accent text-sm font-semibold transition-colors duration-200 focus:outline-none hover:text-accent-hover focus:text-accent-hover">
+                <button className="ltr:text-right rtl:text-left text-accent text-sm font-semibold transition-colors duration-200 focus:outline-none hover:text-accent-hover focus:text-accent-hover">
                   <span>{t('text-copy')}</span>
                 </button>
               </CopyToClipboard>
             )}
 
             {copyText.copied && (
-              <div className="text-end text-accent text-sm font-semibold">
+              <div className="ltr:text-right rtl:text-left text-accent text-sm font-semibold">
                 {t('text-copied')}
               </div>
             )}

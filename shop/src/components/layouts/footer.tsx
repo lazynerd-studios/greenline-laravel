@@ -1,24 +1,24 @@
 import { useTranslation } from 'next-i18next';
-import { siteSettings } from '@settings/site';
-import Link from '@components/ui/link';
-import Logo from '@components/ui/logo';
-import SubscriptionWidget from '@framework/newsletter/subscription';
+import { siteSettings } from '@/settings/site';
+import Link from '@/components/ui/link';
+import Logo from '@/components/ui/logo';
+import SubscriptionWidget from '@/components/settings/subscribe-to-newsletter';
 
 const Footer = () => {
   const { t } = useTranslation('common');
   return (
-    <div className="w-full flex flex-col px-5 md:px-10 lg:px-[50px] xl:px-16 bg-white lg:border-b-8 border-gray-800">
+    <div className="flex w-full flex-col border-gray-800 bg-white px-5 md:px-10 lg:border-b-8 lg:px-[50px] xl:px-16">
       {/* Top */}
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(260px,1fr))] md:grid-cols-3 xl:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] 2xl:grid-cols-5 gap-6 xl:gap-8 w-full pt-16 lg:pt-24 lg:pb-16">
+      <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-6 pt-16 md:grid-cols-3 lg:pt-24 lg:pb-16 xl:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] xl:gap-8 2xl:grid-cols-5">
         <div className="flex flex-col">
-          <div className="h-16 mb-[2px] flex items-start">
+          <div className="mb-[2px] flex h-16 items-start">
             <Logo />
           </div>
 
-          <address className="text-sm text-heading mb-7 not-italic">
+          <address className="mb-7 text-sm not-italic text-heading">
             {t(siteSettings.footer.address)}
           </address>
-          <span className="text-sm text-heading mb-1">
+          <span className="mb-1 text-sm text-heading">
             {t(siteSettings.footer.email)}
           </span>
           <span className="text-sm text-heading">
@@ -28,7 +28,7 @@ const Footer = () => {
 
         {siteSettings.footer.menus.map((menu, idx) => (
           <div className="flex flex-col" key={`${menu.title}-${idx}`}>
-            <h3 className="text-heading font-semibold mt-3 mb-4 lg:mb-7">
+            <h3 className="mt-3 mb-4 font-semibold text-heading lg:mb-7">
               {t(menu.title)}
             </h3>
 
@@ -56,11 +56,11 @@ const Footer = () => {
       </div>
 
       {/* Bottom */}
-      <div className="pb-12 pt-8 mt-8 lg:mt-0 flex w-full flex-col lg:flex-row items-center lg:justify-between border-t border-gray-200 lg:border-t-0">
-        <span className="text-sm text-heading order-2 lg:order-1">
+      <div className="mt-8 flex w-full flex-col items-center border-t border-gray-200 pt-8 pb-12 lg:mt-0 lg:flex-row lg:justify-between lg:border-t-0">
+        <span className="order-2 text-sm text-heading lg:order-1">
           &copy; {t('text-copyright')} {new Date().getFullYear()}{' '}
           <Link
-            className="text-heading font-bold transition-colors hover:text-accent"
+            className="font-bold text-heading transition-colors hover:text-accent"
             href={siteSettings.footer.copyright.href}
           >
             {siteSettings.footer.copyright.name}.
@@ -69,10 +69,10 @@ const Footer = () => {
         </span>
 
         {siteSettings.footer.payment_methods && (
-          <div className="flex items-center space-s-5 order-1 lg:order-2 mb-5 lg:mb-0">
+          <div className="order-1 mb-5 flex items-center space-x-5 rtl:space-x-reverse lg:order-2 lg:mb-0">
             {siteSettings.footer.payment_methods.map((method, idx) => (
               <Link
-                className="h-5 w-auto relative flex items-center overflow-hidden"
+                className="relative flex h-5 w-auto items-center overflow-hidden"
                 key={`${method.url}-${idx}`}
                 href={method.url}
               >

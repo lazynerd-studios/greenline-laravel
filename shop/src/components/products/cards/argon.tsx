@@ -1,12 +1,12 @@
-import { Image } from '@components/ui/image';
+import { Image } from '@/components/ui/image';
 import cn from 'classnames';
-import { AddToCart } from '@components/products/add-to-cart/add-to-cart';
-import usePrice from '@lib/use-price';
+import { AddToCart } from '@/components/products/add-to-cart/add-to-cart';
+import usePrice from '@/lib/use-price';
 import { useTranslation } from 'next-i18next';
-import { useModalAction } from '@components/ui/modal/modal.context';
-import { productPlaceholder } from '@lib/placeholders';
-import { Product } from '@framework/types';
-import { PlusIcon } from '@components/icons/plus-icon';
+import { useModalAction } from '@/components/ui/modal/modal.context';
+import { productPlaceholder } from '@/lib/placeholders';
+import { Product } from '@/framework/types';
+import { PlusIcon } from '@/components/icons/plus-icon';
 
 type ArgonProps = {
   product: any;
@@ -58,18 +58,20 @@ const Argon: React.FC<ArgonProps> = ({ product, className }) => {
           objectFit="contain"
           className="product-image"
         />
+
         {discount && (
-          <div className="absolute top-3 start-3 md:top-4 md:start-4 rounded text-xs leading-6 font-semibold px-1.5 sm:px-2 md:px-2.5 bg-accent text-light">
+          <div className="absolute top-3 ltr:left-3 rtl:right-3 md:top-[22px] ltr:md:left-4 rtl:md:right-4 rounded text-xs leading-6 font-semibold px-1.5 sm:px-2 md:px-2.5 bg-accent text-light">
             {discount}
           </div>
         )}
-        <div className="absolute top-3 end-3 md:top-4 md:end-4">
+
+        <div className="absolute top-3 ltr:right-3 rtl:left-3 md:top-4 ltr:md:right-4 rtl:md:left-4">
           {product_type.toLowerCase() === 'variable' ? (
             <>
               {Number(quantity) > 0 && (
                 <button
                   onClick={handleProductQuickView}
-                  className="w-7 h-7 md:w-9 md:h-9 flex items-center justify-center text-sm text-heading bg-light rounded border border-border-200 transition-colors hover:bg-accent hover:border-accent hover:text-light focus:outline-none focus:bg-accent focus:border-accent focus:text-light"
+                  className="flex items-center justify-center text-sm transition-colors border rounded w-7 h-7 md:w-9 md:h-9 text-heading bg-light border-border-200 hover:bg-accent hover:border-accent hover:text-light focus:outline-none focus:bg-accent focus:border-accent focus:text-light"
                 >
                   <PlusIcon className="w-5 h-5 stroke-2" />
                 </button>
@@ -84,7 +86,7 @@ const Argon: React.FC<ArgonProps> = ({ product, className }) => {
           )}
 
           {Number(quantity) <= 0 && (
-            <div className="bg-red-500 rounded text-xs text-light px-2 py-1">
+            <div className="px-2 py-1 text-xs bg-red-500 rounded text-light">
               {t('text-out-stock')}
             </div>
           )}
@@ -95,21 +97,21 @@ const Argon: React.FC<ArgonProps> = ({ product, className }) => {
       <header className="p-3 md:p-6">
         {product_type.toLowerCase() === 'variable' ? (
           <div className="mb-2">
-            <span className="text-sm md:text-base text-heading font-semibold">
+            <span className="text-sm font-semibold md:text-base text-heading">
               {minPrice}
             </span>
             <span> - </span>
-            <span className="text-sm md:text-base text-heading font-semibold">
+            <span className="text-sm font-semibold md:text-base text-heading">
               {maxPrice}
             </span>
           </div>
         ) : (
           <div className="flex items-center mb-2">
-            <span className="text-sm md:text-base text-heading font-semibold">
+            <span className="text-sm font-semibold md:text-base text-heading">
               {price}
             </span>
             {basePrice && (
-              <del className="text-xs md:text-sm text-body ms-2">
+              <del className="text-xs md:text-sm text-body ltr:ml-2 rtl:mr-2">
                 {basePrice}
               </del>
             )}

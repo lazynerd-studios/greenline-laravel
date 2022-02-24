@@ -1,11 +1,11 @@
-import Link from '@components/ui/link';
-import { Image } from '@components/ui/image';
+import Link from '@/components/ui/link';
+import { Image } from '@/components/ui/image';
 import cn from 'classnames';
-import usePrice from '@lib/use-price';
+import usePrice from '@/lib/use-price';
 import { useTranslation } from 'next-i18next';
-import { ROUTES } from '@lib/routes';
-import { productPlaceholder } from '@lib/placeholders';
-import { Product } from '@framework/types';
+import { ROUTES } from '@/lib/routes';
+import { productPlaceholder } from '@/lib/placeholders';
+import { Product } from '@/framework/types';
 
 type KryptonProps = {
   product: any;
@@ -51,7 +51,7 @@ const Krypton: React.FC<KryptonProps> = ({ product, className }) => {
             className="product-image"
           />
           {discount && (
-            <div className="absolute top-3 end-3 md:top-4 md:end-4 rounded-full text-xs leading-6 font-semibold px-2 md:px-2.5 bg-yellow-500 text-light">
+            <div className="absolute top-3 ltr:right-3 rtl:left-3 md:top-4 ltr:md:right-4 rtl:md:left-4 rounded-full text-xs leading-6 font-semibold px-2 md:px-2.5 bg-yellow-500 text-light">
               {discount}
             </div>
           )}
@@ -74,7 +74,9 @@ const Krypton: React.FC<KryptonProps> = ({ product, className }) => {
             <div className="flex items-center justify-center">
               <span className="text-sm text-sub-heading">{price}</span>
               {basePrice && (
-                <del className="text-sm text-muted ms-2">{basePrice}</del>
+                <del className="text-sm text-muted ltr:ml-2 rtl:mr-2">
+                  {basePrice}
+                </del>
               )}
             </div>
           )}

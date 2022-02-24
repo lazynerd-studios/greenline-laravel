@@ -1,25 +1,25 @@
-import ProductLoader from '@components/ui/loaders/product-loader';
-import NotFound from '@components/ui/not-found';
-import rangeMap from '@lib/range-map';
-import ProductCard from '@components/products/cards/card';
-import ErrorMessage from '@components/ui/error-message';
-import usePopularProducts from '@framework/products/use-popular-products';
-import SectionBlock from '@components/ui/section-block';
+import ProductLoader from '@/components/ui/loaders/product-loader';
+import NotFound from '@/components/ui/not-found';
+import rangeMap from '@/lib/range-map';
+import ProductCard from '@/components/products/cards/card';
+import ErrorMessage from '@/components/ui/error-message';
+import { usePopularProducts } from '@/framework/product';
+import SectionBlock from '@/components/ui/section-block';
 import { useTranslation } from 'next-i18next';
-import { Image } from '@components/ui/image';
-import { siteSettings } from '@settings/site';
-import { productPlaceholder } from '@lib/placeholders';
-import Link from '@components/ui/link';
-import { ROUTES } from '@lib/routes';
+import { Image } from '@/components/ui/image';
+import { siteSettings } from '@/settings/site';
+import { productPlaceholder } from '@/lib/placeholders';
+import Link from '@/components/ui/link';
+import { ROUTES } from '@/lib/routes';
 import { useRouter } from 'next/router';
+import classNames from 'classnames';
 
 interface Props {
+  className?: string;
   limit?: number;
 }
 
-const SellingProductsGrid: React.FC<
-  React.AllHTMLAttributes<HTMLDivElement> & Props
-> = ({ className, limit = 6 }) => {
+export default function SellingProductsGrid({ className, limit = 6 }: Props) {
   const { t } = useTranslation('common');
   const { products, isLoading, error } = usePopularProducts({ range: 30 });
   const router = useRouter();
@@ -36,7 +36,12 @@ const SellingProductsGrid: React.FC<
 
   return (
     <SectionBlock title={t('text-selling-books')}>
-      <div className={`w-full grid grid-cols-4 gap-6 xl:gap-8 ${className} `}>
+      <div
+        className={classNames(
+          'w-full grid grid-cols-4 gap-6 xl:gap-8',
+          className
+        )}
+      >
         <Link
           href={`${router.query.pages && router.query.pages[0]}${
             ROUTES.SEARCH
@@ -67,6 +72,4 @@ const SellingProductsGrid: React.FC<
       </div>
     </SectionBlock>
   );
-};
-
-export default SellingProductsGrid;
+}

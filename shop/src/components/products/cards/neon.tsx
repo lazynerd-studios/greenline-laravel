@@ -1,12 +1,12 @@
-import { Image } from '@components/ui/image';
+import { Image } from '@/components/ui/image';
 import cn from 'classnames';
-import usePrice from '@lib/use-price';
-import { AddToCart } from '@components/products/add-to-cart/add-to-cart';
+import usePrice from '@/lib/use-price';
+import { AddToCart } from '@/components/products/add-to-cart/add-to-cart';
 import { useTranslation } from 'next-i18next';
-import { useModalAction } from '@components/ui/modal/modal.context';
-import { Product } from '@framework/types';
-import { productPlaceholder } from '@lib/placeholders';
-import { PlusIcon } from '@components/icons/plus-icon';
+import { useModalAction } from '@/components/ui/modal/modal.context';
+import { Product } from '@/framework/types';
+import { productPlaceholder } from '@/lib/placeholders';
+import { PlusIcon } from '@/components/icons/plus-icon';
 
 type NeonProps = {
   product: any;
@@ -59,7 +59,7 @@ const Neon: React.FC<NeonProps> = ({ product, className }) => {
           className="product-image"
         />
         {discount && (
-          <div className="absolute top-3 end-3 md:top-4 md:end-4 rounded text-xs leading-6 font-semibold px-1.5 sm:px-2 md:px-2.5 bg-accent text-light">
+          <div className="absolute top-3 ltr:right-3 rtl:left-3 md:top-4 ltr:md:right-4 rtl:md:left-4 rounded text-xs leading-6 font-semibold px-1.5 sm:px-2 md:px-2.5 bg-accent text-light">
             {discount}
           </div>
         )}
@@ -83,7 +83,7 @@ const Neon: React.FC<NeonProps> = ({ product, className }) => {
               {price}
             </span>
             {basePrice && (
-              <del className="text-xs md:text-sm text-muted ms-2">
+              <del className="text-xs md:text-sm text-muted ltr:ml-2 rtl:mr-2">
                 {basePrice}
               </del>
             )}
@@ -107,7 +107,7 @@ const Neon: React.FC<NeonProps> = ({ product, className }) => {
                 className="group w-full h-7 md:h-9 flex items-center justify-between text-xs md:text-sm text-body-dark rounded bg-gray-100 transition-colors hover:bg-accent hover:border-accent hover:text-light focus:outline-none focus:bg-accent focus:border-accent focus:text-light"
               >
                 <span className="flex-1">{t('text-add')}</span>
-                <span className="w-7 h-7 md:w-9 md:h-9 bg-gray-200 grid place-items-center rounded-te rounded-be transition-colors duration-200 group-hover:bg-accent-600 group-focus:bg-accent-600">
+                <span className="w-7 h-7 md:w-9 md:h-9 bg-gray-200 grid place-items-center ltr:rounded-tr rtl:rounded-tl ltr:rounded-br rtl:rounded-bl transition-colors duration-200 group-hover:bg-accent-600 group-focus:bg-accent-600">
                   <PlusIcon className="w-4 h-4 stroke-2" />
                 </span>
               </button>

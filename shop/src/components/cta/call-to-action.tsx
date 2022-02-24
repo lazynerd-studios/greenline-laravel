@@ -1,11 +1,11 @@
 import { useTranslation } from 'next-i18next';
-import { Image } from '@components/ui/image';
-import Link from '@components/ui/link';
-import SectionBlock from '@components/ui/section-block';
-import { siteSettings } from '@settings/site';
-import AppStoreImg from '@assets/app-store-btn.png';
-import PlayStoreImg from '@assets/play-store-btn.png';
-import PatternImg from '@assets/pattern.png';
+import { Image } from '@/components/ui/image';
+import Link from '@/components/ui/link';
+import SectionBlock from '@/components/ui/section-block';
+import { siteSettings } from '@/settings/site';
+import AppStoreImg from '@/assets/app-store-btn.png';
+import PlayStoreImg from '@/assets/play-store-btn.png';
+import PatternImg from '@/assets/pattern.png';
 
 const CallToAction = () => {
   const { t } = useTranslation('common');
@@ -20,11 +20,11 @@ const CallToAction = () => {
               {t('text-cta-header')}
             </span>
             <span
-              className="text-2xl sm:text-4xl sm:!leading-[3rem] text-center lg:text-start"
+              className="text-2xl sm:text-4xl sm:!leading-[3rem] text-center lg:text-left rtl:lg:text-right"
               dangerouslySetInnerHTML={{ __html: t('text-cta-description') }}
             />
 
-            <div className="flex items-center mt-8 lg:mt-14 space-s-6">
+            <div className="flex items-center mt-8 lg:mt-14 space-x-6 rtl:space-x-reverse">
               <Link
                 href={siteSettings.cta.app_store_link}
                 className="w-32 md:w-48"
@@ -52,7 +52,7 @@ const CallToAction = () => {
             </div>
           </div>
 
-          <div className="hidden lg:block absolute bottom-0 end-10 xl:end-28 2xl:end-64 lg:w-[360px] xl:w-[400px] 3xl:w-[480px]">
+          <div className="hidden lg:block absolute bottom-0 right-10 rtl:left-10 xl:right-28 rtl:xl:left-28 2xl:right-64 rtl:2xl:left-64 lg:w-[360px] xl:w-[400px] 3xl:w-[480px]">
             <Image
               src={siteSettings.cta.mockup_img_src}
               width={400}

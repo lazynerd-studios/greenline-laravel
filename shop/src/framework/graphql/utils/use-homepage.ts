@@ -1,4 +1,4 @@
-import { useGroupsQuery } from '@framework/groups/groups.graphql';
+import { useGroupsQuery } from '@/framework/groups/groups.graphql';
 const useHomepage = () => {
   const { data } = useGroupsQuery();
   const homePage =

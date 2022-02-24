@@ -1,18 +1,18 @@
-import { CustomDisclosure } from '@components/ui/disclosure';
+import { CustomDisclosure } from '@/components/ui/disclosure';
 import { useTranslation } from 'next-i18next';
-import Search from '@components/ui/search/search';
+import Search from '@/components/ui/search/search';
 import { useRouter } from 'next/router';
 import Sorting from './sorting';
-import PriceFilter from '@components/search-view/price-filter';
-import CategoryFilter from '@components/search-view/category-filter-view';
-import TagFilter from '@components/search-view/tag-filter-view';
-import ManufacturerFilter from '@components/search-view/manufacturer-filter-view';
+import PriceFilter from '@/components/search-view/price-filter';
+import CategoryFilter from '@/components/search-view/category-filter-view';
+import TagFilter from '@/components/search-view/tag-filter-view';
+import ManufacturerFilter from '@/components/search-view/manufacturer-filter-view';
 import classNames from 'classnames';
 import { useAtom } from 'jotai';
-import { drawerAtom } from '@store/drawer-atom';
-import ArrowNarrowLeft from '@components/icons/arrow-narrow-left';
-import { useIsRTL } from '@lib/locals';
-import Button from '@components/ui/button';
+import { drawerAtom } from '@/store/drawer-atom';
+import ArrowNarrowLeft from '@/components/icons/arrow-narrow-left';
+import { useIsRTL } from '@/lib/locals';
+import Button from '@/components/ui/button';
 
 const FieldWrapper = ({ children, title }: any) => (
   <div className="border-b border-gray-200 py-7 last:border-0">
@@ -45,7 +45,7 @@ function ClearFiltersButton() {
   }
   return (
     <button
-      className="text-sm font-semibold transition-colors text-body hover:text-red-500 focus:text-red-500 focus:outline-none ms-auto me-5 lg:m-0"
+      className="text-sm font-semibold transition-colors text-body hover:text-red-500 focus:text-red-500 focus:outline-none lg:m-0"
       onClick={clearFilters}
     >
       {t('text-clear-all')}
@@ -69,15 +69,15 @@ const SidebarFilter: React.FC<{
         className
       )}
     >
-      <div className="sticky top-0 z-10 flex items-center justify-between px-5 py-6 bg-white border-b border-gray-200 lg:static rounded-ts-xl rounded-te-xl">
-        <div className="flex items-center space-s-3 lg:space-s-0">
+      <div className="sticky top-0 z-10 flex items-center justify-between px-5 py-6 bg-white border-b border-gray-200 lg:static rounded-tl-xl rounded-tr-xl">
+        <div className="flex items-center space-x-3 rtl:space-x-reverse lg:space-x-0">
           <button
             className="text-body focus:outline-none lg:hidden"
             onClick={() => closeSidebar({ display: false, view: '' })}
           >
             <ArrowNarrowLeft
               className={classNames('h-7', {
-                'transform rotate-180': isRTL,
+                'rotate-180': isRTL,
               })}
               strokeWidth={1.7}
             />

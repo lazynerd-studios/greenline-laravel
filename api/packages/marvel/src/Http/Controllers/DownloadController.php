@@ -27,9 +27,9 @@ class DownloadController extends CoreController
     public function fetchDownloadableFiles(Request $request)
     {
         $limit = isset($request->limit) ? $request->limit : 15;
-        return $this->fetchFiles($request)->paginate($limit)->loadMorph('reviewable', [
-            Product::class => [],
-            Variation::class => ['product'],
+        return $this->fetchFiles($request)->paginate($limit)->loadMorph('file.fileable', [
+            Product::class => ['shop'],
+            Variation::class => ['product.shop'],
         ])->withQueryString();
     }
 
@@ -37,7 +37,7 @@ class DownloadController extends CoreController
     {
         $user = $request->user();
         if ($user) {
-            return $this->repository->with('file.fileable')->where('customer_id', $user->id);
+            return $this->repository->where('customer_id', $user->id);
         }
         throw new MarvelException(NOT_AUTHORIZED);
     }

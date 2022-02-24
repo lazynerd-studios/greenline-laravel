@@ -63,7 +63,7 @@
 .swiper-pagination-bullets.swiper-pagination-horizontal,
 .swiper-pagination-custom,
 .swiper-pagination-fraction {
-  @apply bottom-4 flex justify-center items-center space-s-2;
+  @apply bottom-4 flex justify-center items-center space-x-2;
 }
 
 /* some utilities that are not been supported yet in Tailwind v2 */
@@ -159,7 +159,7 @@ Overlay Scrollbar - os-theme-thin-dark
   bottom: 0;
   width: 2px;
   left: 50%;
-  margin-left: -1px;
+  @apply ltr:-ml-px rtl:-mr-px;
 }
 .os-theme-thin-dark
   > .os-scrollbar
@@ -191,7 +191,7 @@ Overlay Scrollbar - os-theme-thin-dark
   > .os-scrollbar-track
   > .os-scrollbar-handle.active:before {
   width: 4px;
-  margin-left: -2px;
+  @apply ltr:-ml-0.5 rtl:-mr-0.5;
 }
 .os-theme-thin-dark
   > .os-scrollbar-horizontal
@@ -237,7 +237,7 @@ Overlay Scrollbar - os-theme-thin-dark
   > .os-scrollbar-vertical
   > .os-scrollbar-track
   > .os-scrollbar-handle:before {
-  transition: width 0.3s, margin-left 0.3s, background 0.2s;
+  transition: width 0.3s, margin-left 0.3s margin-right 0.3s, background 0.2s;
 }
 
 .scrollbar_height {
@@ -395,7 +395,7 @@ body[dir='rtl'] .react-tel-input .country-list .flag {
   @apply shadow-header;
 } */
 .headerMenu .menuItem > a::before {
-  @apply absolute end-0 w-0 bg-white -bottom-7;
+  @apply absolute ltr:right-0 rtl:left-0 w-0 bg-white -bottom-7;
   content: '';
   height: 3px;
   transition: all 0.3s ease-in-out 0s;
@@ -441,7 +441,7 @@ body[dir='rtl'] .react-tel-input .country-list .flag {
 }
 
 .headerMenu .menuItem:hover > a::before {
-  @apply w-full end-auto start-0;
+  @apply w-full ltr:right-auto rtl:left-auto ltr:left-0 rtl:right-0;
 }
 .headerMenu .menuItem:hover > .megaMenu,
 .headerMenu .menuItem:hover > .subMenu {
@@ -456,7 +456,7 @@ body[dir='rtl'] .react-tel-input .country-list .flag {
 .mobileMenu .menu-item.active::before {
   content: '';
   width: 3px;
-  @apply flex absolute h-full bg-white top-0 start-0 bottom-0;
+  @apply flex absolute h-full bg-white top-0 ltr:left-0 rtl:right-0 bottom-0;
 }
 .mobileMenu li li {
   @apply text-body text-sm;
@@ -467,7 +467,7 @@ body[dir='rtl'] .react-tel-input .country-list .flag {
 .mobileMenu li > ul > li > div > a:before {
   content: '';
   height: 1px;
-  @apply flex absolute bg-white top-1/2 start-1.5 md:start-3 w-1.5 md:w-2;
+  @apply flex absolute bg-white top-1/2 ltr:left-1.5 rtl:right-1.5 ltr:md:left-3 rtl:md:right-3 w-1.5 md:w-2;
 }
 
 /* Radio */
@@ -488,12 +488,12 @@ body[dir='rtl'] .react-tel-input .country-list .flag {
 
 .radio-input + label:before {
   content: '';
-  margin-right: 10px;
   display: inline-flex;
   width: 18px;
   height: 18px;
   border-radius: 99999px;
   background-color: #ffffff;
+  @apply ltr:mr-2.5 rtl:ml-2.5;
 }
 
 .radio-input + label.primary:before {
@@ -564,13 +564,13 @@ body[dir='rtl'] .react-tel-input .country-list .flag {
 
 .checkbox + label:before {
   content: '';
-  margin-right: 10px;
   display: inline-flex;
   flex-shrink: 0;
   width: 18px;
   height: 18px;
   border-radius: 3px;
   background-color: #ffffff;
+  @apply ltr:mr-2.5 rtl:ml-2.5;
 }
 
 .checkbox + label.primary:before {

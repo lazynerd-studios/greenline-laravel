@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from '@components/ui/link';
+import Link from '@/components/ui/link';
 import { useTranslation } from 'next-i18next';
 
 interface MenuItem {
@@ -18,7 +18,7 @@ type MegaMenuProps = {
 const MegaMenu: React.FC<MegaMenuProps> = ({ columns }) => {
   const { t } = useTranslation('menu');
   return (
-    <div className="megaMenu shadow-header bg-white absolute border border-gray-200 start-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible shadow-md">
+    <div className="megaMenu shadow-header bg-white absolute border border-gray-200 ltr:left-0 rtl:right-0 opacity-0 invisible group-hover:opacity-100 group-hover:visible shadow-md">
       <div className="grid grid-cols-5">
         {columns?.map((column) => (
           <ul

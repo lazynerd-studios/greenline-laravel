@@ -3,17 +3,19 @@ import MobileNavigation from './mobile-navigation';
 
 export default function GeneralLayout({
   children,
-}: React.PropsWithChildren<{}>) {
+  layout,
+}: React.PropsWithChildren<{ layout: string }>) {
   return (
-    <div className="flex flex-col min-h-screen transition-colors duration-150 bg-gray-100">
-      <Header />
+    <div className="flex min-h-screen flex-col bg-gray-100 transition-colors duration-150">
+      <Header layout={layout} />
       {children}
+      <MobileNavigation />
     </div>
   );
 }
 
 export const getGeneralLayout = (page: React.ReactElement) => (
-  <GeneralLayout>
+  <GeneralLayout layout={page.props.layout}>
     {page}
     <MobileNavigation />
   </GeneralLayout>

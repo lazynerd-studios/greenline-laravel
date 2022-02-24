@@ -1,6 +1,6 @@
 import cn from 'classnames';
-import { Image } from '@components/ui/image';
-import { productPlaceholder } from '@lib/placeholders';
+import { Image } from '@/components/ui/image';
+import { productPlaceholder } from '@/lib/placeholders';
 
 interface BreadcrumbButtonProps {
   text: string;
@@ -15,16 +15,16 @@ const BreadcrumbButton: React.FC<BreadcrumbButtonProps> = ({
 }) => (
   <button
     className={cn(
-      'h-14 px-7 text-base font-semibold text-heading bg-light relative rounded-lg transition-shadow shadow-downfall-xs hover:shadow-downfall-sm',
+      'relative h-14 rounded-lg bg-light px-7 text-base font-semibold text-heading shadow-downfall-xs transition-shadow hover:shadow-downfall-sm',
       {
-        'pe-24': image,
+        'ltr:pr-[5.5rem] rtl:pl-[5.5rem]': image,
       }
     )}
     onClick={onClick}
   >
     <span className="whitespace-nowrap">{text}</span>
     {image && (
-      <span className="absolute bottom-0 end-0 w-14 h-full rounded-lg rounded-s-none overflow-hidden">
+      <span className="absolute bottom-0 h-full overflow-hidden rounded-lg w-14 ltr:right-0 ltr:rounded-l-none rtl:left-0 rtl:rounded-r-none">
         <Image
           className="w-full h-full"
           src={image ?? productPlaceholder}

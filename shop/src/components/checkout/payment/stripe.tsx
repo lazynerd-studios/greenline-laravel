@@ -1,12 +1,12 @@
-import Button from '@components/ui/button';
-import { verifiedTokenAtom } from '@store/checkout';
+import Button from '@/components/ui/button';
+import { verifiedTokenAtom } from '@/store/checkout';
 import {
   Elements,
   CardElement,
   useStripe,
   useElements,
 } from '@stripe/react-stripe-js';
-import getStripe from '@lib/get-stripejs';
+import getStripe from '@/lib/get-stripejs';
 import { useAtom } from 'jotai';
 import { useTranslation } from 'next-i18next';
 import { useState } from 'react';
@@ -52,7 +52,7 @@ const StripeForm: React.FC = () => {
         type="submit"
         loading={loading}
         disabled={!stripe}
-        className="StripePay mt-5 ms-auto transition-colors bg-gray-800 hover:bg-gray-900"
+        className="StripePay mt-5 ltr:ml-auto rtl:mr-auto transition-colors bg-gray-800 hover:bg-gray-900"
       >
         {t('text-confirm')}
       </Button>

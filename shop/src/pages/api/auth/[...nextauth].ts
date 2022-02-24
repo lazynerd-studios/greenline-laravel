@@ -1,3 +1,4 @@
+import { getEnv } from '@/config/get-env';
 import NextAuth from 'next-auth';
 import FacebookProvider from 'next-auth/providers/facebook';
 import GoogleProvider from 'next-auth/providers/google';
@@ -7,20 +8,20 @@ import GoogleProvider from 'next-auth/providers/google';
 export default NextAuth({
   // https://next-auth.js.org/configuration/providers
   providers: [
-    FacebookProvider({
-      clientId: process.env.FACEBOOK_CLIENT_ID!,
-      clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
-    }),
+    // FacebookProvider({
+    //   clientId: getEnv('FACEBOOK_CLIENT_ID'),
+    //   clientSecret: getEnv('FACEBOOK_CLIENT_SECRET'),
+    // }),
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      clientId: getEnv('GOOGLE_CLIENT_ID'),
+      clientSecret: getEnv('GOOGLE_CLIENT_SECRET'),
     }),
   ],
 
   // The secret should be set to a reasonably long random string.
   // It is used to sign cookies and to sign and encrypt JSON Web Tokens, unless
   // a separate secret is defined explicitly for encrypting the JWT.
-  secret: process.env.SECRET,
+  secret: getEnv('SECRET'),
 
   session: {
     // Use JSON Web Tokens for session instead of database sessions.
@@ -68,29 +69,25 @@ export default NextAuth({
   // when an action is performed.
   // https://next-auth.js.org/configuration/callbacks
   callbacks: {
-    // async signIn(user, account, profile) {
-    // 	const { access_token } = account;
-    // 	if (access_token) {
-    // 		user.accessToken = access_token;
-    // 		return user;
-    // 	}
-    // 	return false;
+    // async signIn({ account, profile, user}) {
+    // 	if (account.provider === "google") {
+    //     return profile.email_verified && profile?.email?.endsWith("@gmail.com")
+    //   }
+    //   return true // Return true to allow sign in
     // },
-    async jwt({ token, account, isNewUser }) {
+    async jwt({ token, account }) {
       if (account) {
-        const { accessToken, provider } = account;
+        const { access_token, provider } = account;
         token.provider = provider;
         // reform the `token` object from the access token we appended to the `user` object
-        token.accessToken = accessToken;
+        token.access_token = access_token;
       }
       return token;
     },
-    async session({ session, user }) {
-      if (user) {
-        const { accessToken, provider } = user;
-        session.provider = provider;
-        session.accessToken = accessToken;
-      }
+    async session({ session, token, user }) {
+      const { access_token, provider } = token;
+      session.provider = provider;
+      session.access_token = access_token;
       return session;
     },
   },
@@ -100,5 +97,5 @@ export default NextAuth({
   events: {},
 
   // Enable debug messages in the console if you are having problems
-  debug: process.env.NODE_ENV === 'development',
+  // debug: getEnv('NODE_ENV') === 'development',
 });

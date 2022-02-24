@@ -1,10 +1,10 @@
-import Button from '@components/ui/button';
-import Spinner from '@components/ui/loaders/spinner/spinner';
+import Button from '@/components/ui/button';
+import Spinner from '@/components/ui/loaders/spinner/spinner';
 import { useTranslation } from 'next-i18next';
 import Collapse from 'rc-collapse';
 import 'rc-collapse/assets/index.css';
-import { Image } from '@components/ui/image';
-import noResult from '@assets/no-result.svg';
+import { Image } from '@/components/ui/image';
+import noResult from '@/assets/no-result.svg';
 
 interface OrdersWithLoaderProps {
   showLoaders: boolean;

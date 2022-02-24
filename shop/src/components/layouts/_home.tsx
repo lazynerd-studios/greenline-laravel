@@ -1,23 +1,28 @@
 import { motion } from 'framer-motion';
 import { useTranslation } from 'next-i18next';
 import { useAtom } from 'jotai';
-import useLayout from '@framework/utils/use-layout';
 import Header from './header';
 import HeaderMinimal from './header-minimal';
 import MobileNavigation from './mobile-navigation';
 import Footer from './footer';
-import { SearchIcon } from '@components/icons/search-icon';
-import { displayMobileHeaderSearchAtom } from '@store/display-mobile-header-search-atom';
+import { SearchIcon } from '@/components/icons/search-icon';
+import { displayMobileHeaderSearchAtom } from '@/store/display-mobile-header-search-atom';
 
-export default function HomeLayout({ children }: React.PropsWithChildren<{}>) {
+export default function HomeLayout({
+  children,
+  layout,
+}: React.PropsWithChildren<{ layout: string }>) {
   const { t } = useTranslation('common');
   const [, setDisplayMobileHeaderSearch] = useAtom(
     displayMobileHeaderSearchAtom
   );
-  const { layout } = useLayout();
   return (
     <div className="flex flex-col min-h-screen transition-colors duration-150 bg-gray-100">
-      {['minimal', 'compact'].includes(layout) ? <HeaderMinimal /> : <Header />}
+      {['minimal', 'compact'].includes(layout) ? (
+        <HeaderMinimal layout={layout} />
+      ) : (
+        <Header layout={layout} />
+      )}
       <div className="min-h-screen">{children}</div>
       {['compact'].includes(layout) && <Footer />}
       <MobileNavigation>

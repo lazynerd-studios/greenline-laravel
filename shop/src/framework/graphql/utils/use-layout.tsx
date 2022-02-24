@@ -1,4 +1,4 @@
-import { useGroupsQuery } from '@framework/groups/groups.graphql';
+import { useGroupsQuery } from '@/framework/groups/groups.graphql';
 import { useRouter } from 'next/router';
 const useLayout = () => {
   const { data } = useGroupsQuery();

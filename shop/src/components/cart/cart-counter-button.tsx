@@ -1,8 +1,8 @@
-import CartCheckBagIcon from '@components/icons/cart-check-bag';
-import { formatString } from '@lib/format-string';
-import usePrice from '@lib/use-price';
-import { drawerAtom } from '@store/drawer-atom';
-import { useCart } from '@store/quick-cart/cart.context';
+import CartCheckBagIcon from '@/components/icons/cart-check-bag';
+import { formatString } from '@/lib/format-string';
+import usePrice from '@/lib/use-price';
+import { drawerAtom } from '@/store/drawer-atom';
+import { useCart } from '@/store/quick-cart/cart.context';
 import { useAtom } from 'jotai';
 import { useTranslation } from 'next-i18next';
 
@@ -18,12 +18,12 @@ const CartCounterButton = () => {
   }
   return (
     <button
-      className="hidden product-cart lg:flex flex-col items-center justify-center p-3 pt-3.5 fixed top-1/2 -mt-12 end-0 z-40 shadow-900 rounded rounded-te-none rounded-be-none bg-accent text-light text-sm font-semibold transition-colors duration-200 focus:outline-none hover:bg-accent-hover"
+      className="hidden product-cart lg:flex flex-col items-center justify-center p-3 pt-3.5 fixed top-1/2 -mt-12 ltr:right-0 rtl:left-0 z-40 shadow-900 rounded ltr:rounded-tr-none rtl:rounded-tl-none ltr:rounded-br-none rtl:rounded-bl-none bg-accent text-light text-sm font-semibold transition-colors duration-200 focus:outline-none hover:bg-accent-hover"
       onClick={handleCartSidebar}
     >
       <span className="flex pb-0.5">
-        <CartCheckBagIcon className="flex-shrink-0" width={14} height={16} />
-        <span className="flex ms-2">
+        <CartCheckBagIcon className="shrink-0" width={14} height={16} />
+        <span className="flex ltr:ml-2 rtl:mr-2">
           {formatString(totalUniqueItems, t('common:text-item'))}
         </span>
       </span>

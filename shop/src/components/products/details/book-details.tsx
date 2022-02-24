@@ -1,25 +1,25 @@
-import usePrice from '@lib/use-price';
-import { ThumbsCarousel } from '@components/ui/thumb-carousel';
+import usePrice from '@/lib/use-price';
+import { ThumbsCarousel } from '@/components/ui/thumb-carousel';
 import { useTranslation } from 'next-i18next';
-import { getVariations } from '@lib/get-variations';
+import { getVariations } from '@/lib/get-variations';
 import { useMemo } from 'react';
 import isEqual from 'lodash/isEqual';
 import isEmpty from 'lodash/isEmpty';
-import Truncate from '@components/ui/truncate';
+import Truncate from '@/components/ui/truncate';
 import { scroller, Element } from 'react-scroll';
 import VariationPrice from './variation-price';
-import { ROUTES } from '@lib/routes';
-import { Product } from '@framework/types';
+import { ROUTES } from '@/lib/routes';
+import { Product } from '@/framework/types';
 import { useAtom } from 'jotai';
 import VariationGroups from './variation-groups';
-import { isVariationSelected } from '@lib/is-variation-selected';
+import { isVariationSelected } from '@/lib/is-variation-selected';
 import { Waypoint } from 'react-waypoint';
-import { stickyShortDetailsAtom } from '@store/sticky-short-details-atom';
+import { stickyShortDetailsAtom } from '@/store/sticky-short-details-atom';
 import { useAttributes } from './attributes.context';
-import { AddToCartAlt } from '@components/products/add-to-cart/add-to-cart-alt';
+import { AddToCartAlt } from '@/components/products/add-to-cart/add-to-cart-alt';
 import BadgeGroups from './badge-groups';
-import Link from '@components/ui/link';
-import { displayImage } from '@lib/display-product-preview-images';
+import Link from '@/components/ui/link';
+import { displayImage } from '@/lib/display-product-preview-images';
 
 type Props = {
   product: Product;
@@ -84,7 +84,7 @@ const BookDetails: React.FC<Props> = ({ product, isModal = false }) => {
   const previewImages = displayImage(selectedVariation?.image, gallery, image);
   return (
     <article className="max-w-screen-xl px-5 py-16 mx-auto rounded-lg bg-light xl:px-0">
-      <div className="flex flex-col border-b lg:flex-row lg:space-s-10 xl:space-s-16 pb-14 border-border-200 border-opacity-70">
+      <div className="flex flex-col border-b lg:flex-row lg:space-x-10 xl:space-x-16 rtl:lg:space-x-reverse pb-14 border-border-200 border-opacity-70">
         <div className="lg:w-1/2">
           <div className="h-full py-5 bg-gray-100 product-gallery md:py-16">
             <ThumbsCarousel
@@ -109,19 +109,19 @@ const BookDetails: React.FC<Props> = ({ product, isModal = false }) => {
                   </h1>
                 )}
                 {Boolean(is_digital) && (
-                  <span className="ms-5 px-3 py-1.5 bg-accent-400 rounded text-xs font-normal text-white">
+                  <span className="ltr:ml-5 rtl:mr-5 px-3 py-1.5 bg-accent-400 rounded text-xs font-normal text-white">
                     {t('text-downloadable')}
                   </span>
                 )}
               </div>
 
               {author?.name && (
-                <div className="flex items-center mt-4 space-s-5 md:mt-5">
+                <div className="flex items-center mt-4 space-x-5 rtl:space-x-reverse md:mt-5">
                   <p className="flex items-center text-sm font-normal text-body">
                     {t('text-by-author')}
                     <Link
                       href={`${ROUTES.AUTHORS}/${author?.slug}`}
-                      className="text-sm font-bold transition-colors text-heading ms-2 hover:text-accent"
+                      className="text-sm font-bold transition-colors text-heading ltr:ml-2 rtl:mr-2 hover:text-accent"
                     >
                       {author?.name}
                     </Link>
@@ -138,7 +138,7 @@ const BookDetails: React.FC<Props> = ({ product, isModal = false }) => {
                       maxPrice={product.max_price}
                     />
                     {isSelected && discount && (
-                      <span className="px-2 py-1 text-xs font-semibold leading-6 uppercase rounded-md ms-4 bg-accent-200 text-accent">
+                      <span className="px-2 py-1 text-xs font-semibold leading-6 uppercase rounded-md ltr:ml-4 rtl:mr-4 bg-accent-200 text-accent">
                         {discount} {t('text-off')}
                       </span>
                     )}
@@ -151,7 +151,7 @@ const BookDetails: React.FC<Props> = ({ product, isModal = false }) => {
                   </div>
                 </>
               ) : (
-                <span className="flex items-center mt-5 mb-7 space-s-4">
+                <span className="flex items-center mt-5 mb-7 space-x-4 rtl:space-x-reverse">
                   <ins className="text-2xl font-bold no-underline md:text-3xl text-heading">
                     {price}
                   </ins>
@@ -203,7 +203,7 @@ const BookDetails: React.FC<Props> = ({ product, isModal = false }) => {
                   <Link
                     href={`/${type?.slug}/search/?category=${category.slug}`}
                     key={category.id}
-                    className="text-sm text-body pe-0.5 bg-transparent transition-colors hover:text-accent focus:outline-none focus:bg-opacity-100 last:pe-0 after:content-[','] last:after:content-['']"
+                    className="text-sm text-body ltr:pr-0.5 rtl:pl-0.5 bg-transparent transition-colors hover:text-accent focus:outline-none focus:bg-opacity-100 ltr:last:pr-0 rtl:last:pl-0 after:content-[','] last:after:content-['']"
                   >
                     {category.name}
                   </Link>
@@ -217,7 +217,7 @@ const BookDetails: React.FC<Props> = ({ product, isModal = false }) => {
                   <Link
                     href={`/${type?.slug}/search/?tags=${tag.slug}`}
                     key={tag.id}
-                    className="text-sm text-body pe-0.5 bg-transparent transition-colors hover:text-accent focus:outline-none focus:bg-opacity-100 last:pe-0 after:content-[','] last:after:content-['']"
+                    className="text-sm text-body ltr:pr-0.5 rtl:pl-0.5 bg-transparent transition-colors hover:text-accent focus:outline-none focus:bg-opacity-100 ltr:last:pr-0 rtl:last:pl-0 after:content-[','] last:after:content-['']"
                   >
                     {tag.name}
                   </Link>
@@ -258,16 +258,16 @@ const BookDetails: React.FC<Props> = ({ product, isModal = false }) => {
         <div className="flex flex-col space-y-3 mt-7">
           {name && (
             <p className="text-sm text-body">
-              <span className="font-semibold text-heading pe-1">
-                {t('text-title')}:
+              <span className="font-semibold text-heading ltr:pr-1 rtl:pl-1">
+                {t('text-title')} :
               </span>
               {name}
             </p>
           )}
           {author?.name && (
             <p className="flex items-center text-sm text-body">
-              <span className="order-1 font-semibold text-heading pe-1">
-                {t('text-author')}:
+              <span className="order-1 font-semibold text-heading ltr:pr-1 rtl:pl-1">
+                {t('text-author')} :
               </span>
               <Link
                 href={`${ROUTES.AUTHORS}/${author?.slug}`}
@@ -279,8 +279,8 @@ const BookDetails: React.FC<Props> = ({ product, isModal = false }) => {
           )}
           {manufacturer?.name && (
             <p className="flex items-center text-sm text-body">
-              <span className="order-1 font-semibold text-heading pe-1">
-                {t('text-publisher')}:
+              <span className="order-1 font-semibold text-heading ltr:pr-1 rtl:pl-1">
+                {t('text-publisher')} :
               </span>
               <Link
                 href={`${ROUTES.MANUFACTURERS}/${manufacturer?.slug}`}

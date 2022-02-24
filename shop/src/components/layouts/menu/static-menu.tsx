@@ -1,5 +1,5 @@
-import Link from '@components/ui/link';
-import { ROUTES } from '@lib/routes';
+import Link from '@/components/ui/link';
+import { ROUTES } from '@/lib/routes';
 import { useTranslation } from 'next-i18next';
 
 const headerLinks = [
@@ -20,7 +20,7 @@ const StaticMenu = () => {
             href={href}
             className="font-normal text-heading flex items-center transition duration-200 no-underline hover:text-accent focus:text-accent"
           >
-            {icon && <span className="me-2">{icon}</span>}
+            {icon && <span className="ltr:mr-2 rtl:ml-2">{icon}</span>}
             {t(label)}
           </Link>
         </li>

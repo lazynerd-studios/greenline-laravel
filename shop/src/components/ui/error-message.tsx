@@ -5,13 +5,17 @@ interface ErrorProps {
 
 export const Error: React.FC<ErrorProps> = ({ message }) => {
   const { t } = useTranslation('common');
-  return <p className="my-2 text-xs text-start text-red-500">{t(message!)}</p>;
+  return (
+    <p className="mt-2 text-xs text-red-500 ltr:text-left rtl:text-right">
+      {t(message!)}
+    </p>
+  );
 };
 
 const ErrorMessage: React.FC<ErrorProps> = ({ message }) => {
   const { t } = useTranslation('common');
   return (
-    <p className="bg-red-400 p-5 mt-16 mx-auto max-w-sm min-w-min text-center text-lg text-light font-semibold rounded">
+    <p className="max-w-sm p-5 mx-auto mt-16 text-lg font-semibold text-center bg-red-400 rounded min-w-min text-light">
       {t(message!)}
     </p>
   );

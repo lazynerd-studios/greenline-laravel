@@ -17,7 +17,7 @@ const CategoryBadges = ({ onClose, categories, basePath }: Props) => {
   };
   return (
     <div className="w-full mt-4 md:mt-6 pt-4 md:pt-6 flex flex-row items-start border-t border-border-200 border-opacity-60">
-      <span className="text-sm font-semibold text-heading capitalize me-6 py-1">
+      <span className="text-sm font-semibold text-heading capitalize ltr:mr-6 rtl:ml-6 py-1">
         {t('text-categories')}
       </span>
       <div className="flex flex-row flex-wrap">
@@ -25,7 +25,7 @@ const CategoryBadges = ({ onClose, categories, basePath }: Props) => {
           <button
             onClick={() => handleClick(`${basePath}?category=${category.slug}`)}
             key={category.id}
-            className="lowercase text-sm text-heading tracking-wider whitespace-nowrap py-1 px-2.5 bg-transparent border border-border-200 rounded me-2 mb-2 transition-colors hover:border-accent hover:text-accent focus:outline-none focus:bg-opacity-100"
+            className="lowercase text-sm text-heading tracking-wider whitespace-nowrap py-1 px-2.5 bg-transparent border border-border-200 rounded ltr:mr-2 rtl:ml-2 mb-2 transition-colors hover:border-accent hover:text-accent focus:outline-none focus:bg-opacity-100"
           >
             {category.name}
           </button>

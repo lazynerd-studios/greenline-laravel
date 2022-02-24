@@ -1,27 +1,34 @@
-import { useModalAction } from '@components/ui/modal/modal.context';
-import { OTP } from '@framework/otp/otp';
-import { customerContactAtom } from '@store/checkout';
+import { useModalAction } from '@/components/ui/modal/modal.context';
+import OtpForm from '@/components/otp/otp-form';
+import { customerContactAtom } from '@/store/checkout';
 import { useAtom } from 'jotai';
 import { useTranslation } from 'next-i18next';
+import { useSettings } from '@/framework/settings';
+import PhoneNumberForm from '@/components/otp/phone-number-form';
 
-const AddOrUpdateCheckoutContact = () => {
-  const { closeModal } = useModalAction();
+export default function AddOrUpdateContact() {
   const { t } = useTranslation('common');
+  const {
+    settings: { useOtp },
+  } = useSettings();
+  const { closeModal } = useModalAction();
   const [contactNumber, setContactNumber] = useAtom(customerContactAtom);
 
-  function onContactUpdate(newPhoneNumber: string) {
-    setContactNumber(newPhoneNumber);
+  function onSubmit({ phone_number }: { phone_number: string }) {
+    setContactNumber(phone_number);
     closeModal();
   }
   return (
-    <div className="p-5 sm:p-8 bg-light md:rounded-xl min-h-screen flex flex-col justify-center md:min-h-0">
-      <h1 className="text-heading font-semibold text-sm text-center mb-5 sm:mb-6">
+    <div className="flex flex-col justify-center min-h-screen p-5 bg-light sm:p-8 md:min-h-0 md:rounded-xl">
+      <h1 className="mb-5 text-sm font-semibold text-center text-heading sm:mb-6">
         {contactNumber ? t('text-update') : t('text-add-new')}{' '}
         {t('text-contact-number')}
       </h1>
-      <OTP defaultValue={contactNumber} onVerify={onContactUpdate} />
+      {useOtp ? (
+        <OtpForm phoneNumber={contactNumber} onVerifySuccess={onSubmit} />
+      ) : (
+        <PhoneNumberForm onSubmit={onSubmit} phoneNumber={contactNumber} />
+      )}
     </div>
   );
-};
-
-export default AddOrUpdateCheckoutContact;
+}

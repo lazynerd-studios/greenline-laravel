@@ -1,10 +1,10 @@
-import { useCart } from '@store/quick-cart/cart.context';
+import { useCart } from '@/store/quick-cart/cart.context';
 import { useTranslation } from 'next-i18next';
 import ItemCard from './item-card';
-import EmptyCartIcon from '@components/icons/empty-cart';
-import usePrice from '@lib/use-price';
+import EmptyCartIcon from '@/components/icons/empty-cart';
+import usePrice from '@/lib/use-price';
 import { ItemInfoRow } from './item-info-row';
-import { CheckAvailabilityAction } from '@framework/checkout/check-availability-action';
+import { CheckAvailabilityAction } from '@/components/checkout/check-availability-action';
 
 const UnverifiedItemList = ({ hideTitle = false }: { hideTitle?: boolean }) => {
   const { t } = useTranslation('common');
@@ -18,7 +18,7 @@ const UnverifiedItemList = ({ hideTitle = false }: { hideTitle?: boolean }) => {
   return (
     <div className="w-full">
       {!hideTitle && (
-        <div className="flex flex-col items-center mb-4 space-s-4">
+        <div className="flex flex-col items-center mb-4 space-x-4 rtl:space-x-reverse">
           <span className="text-base font-bold text-heading">
             {t('text-your-order')}
           </span>

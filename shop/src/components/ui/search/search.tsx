@@ -1,4 +1,4 @@
-import SearchBox from '@components/ui/search/search-box';
+import SearchBox from '@/components/ui/search/search-box';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { useSearch } from './search.context';

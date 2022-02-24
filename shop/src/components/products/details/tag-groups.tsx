@@ -25,7 +25,7 @@ const TagGroups = ({ onClose, tags, basePath }: Props) => {
           <button
             onClick={() => handleClick(`${basePath}?tag=${tag.slug}`)}
             key={tag.id}
-            className="text-sm text-body pe-0.5 bg-transparent transition-colors hover:text-accent focus:outline-none focus:bg-opacity-100 last:pe-0 after:content-[','] last:after:content-['']"
+            className="text-sm text-body ltr:pr-0.5 rtl:pl-0.5 bg-transparent transition-colors hover:text-accent focus:outline-none focus:bg-opacity-100 ltr:last:pr-0 rtl:last:pl-0 after:content-[','] last:after:content-['']"
           >
             {tag.name}
           </button>

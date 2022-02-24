@@ -1,10 +1,10 @@
-import { Table } from '@components/ui/table';
-import usePrice from '@lib/use-price';
+import { Table } from '@/components/ui/table';
+import usePrice from '@/lib/use-price';
 import { useTranslation } from 'next-i18next';
-import { useIsRTL } from '@lib/locals';
+import { useIsRTL } from '@/lib/locals';
 import { useMemo } from 'react';
-import { Image } from '@components/ui/image';
-import { productPlaceholder } from '@lib/placeholders';
+import { Image } from '@/components/ui/image';
+import { productPlaceholder } from '@/lib/placeholders';
 
 const OrderItemList = (_: any, record: any) => {
   const { price } = usePrice({
@@ -19,7 +19,7 @@ const OrderItemList = (_: any, record: any) => {
   }
   return (
     <div className="flex items-center">
-      <div className="w-16 h-16 flex flex-shrink-0 rounded overflow-hidden relative">
+      <div className="w-16 h-16 flex shrink-0 rounded overflow-hidden relative">
         <Image
           src={record.image?.thumbnail ?? productPlaceholder}
           alt={name}
@@ -28,7 +28,7 @@ const OrderItemList = (_: any, record: any) => {
         />
       </div>
 
-      <div className="flex flex-col ms-4 overflow-hidden">
+      <div className="flex flex-col ltr:ml-4 rtl:mr-4 overflow-hidden">
         <div className="flex mb-1">
           <span className="text-sm text-body truncate inline-block overflow-hidden">
             {name} x&nbsp;
@@ -51,7 +51,7 @@ export const OrderItems = ({ products }: { products: any }) => {
   const orderTableColumns = useMemo(
     () => [
       {
-        title: <span className="ps-20">{t('text-item')}</span>,
+        title: <span className="ltr:pl-20 rtl:pr-20">{t('text-item')}</span>,
         dataIndex: '',
         key: 'items',
         align: alignLeft,

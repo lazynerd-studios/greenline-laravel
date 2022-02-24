@@ -1,10 +1,10 @@
-import Scrollbar from '@components/ui/scrollbar';
-import Select from '@components/ui/select/select';
+import Scrollbar from '@/components/ui/scrollbar';
+import Select from '@/components/ui/select/select';
 import { RadioGroup } from '@headlessui/react';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useIsRTL } from '@lib/locals';
+import { useIsRTL } from '@/lib/locals';
 interface Plan {
   id: number | string;
   key: string;
@@ -79,6 +79,7 @@ const Sorting: React.FC<Props> = ({ variant = 'radio' }) => {
           defaultValue={selected}
           isRtl={isRTL}
           options={plans}
+          isSearchable={false}
           // @ts-ignore
           onChange={handleChange}
         />
@@ -96,7 +97,7 @@ const Sorting: React.FC<Props> = ({ variant = 'radio' }) => {
                     <>
                       <div className="flex items-center w-full cursor-pointer">
                         <span
-                          className={`w-[18px] h-[18px] rounded-full bg-white me-3 ${
+                          className={`h-[18px] w-[18px] rounded-full bg-white ltr:mr-3 rtl:ml-3 ${
                             checked
                               ? 'border-[5px] border-gray-800'
                               : 'border border-gray-600'

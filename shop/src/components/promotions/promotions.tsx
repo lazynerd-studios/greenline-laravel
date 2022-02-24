@@ -1,13 +1,10 @@
-import PromotionSlider from '@components/promotions/promotion-slider';
-import ErrorMessage from '@components/ui/error-message';
-import useGroup from '@framework/groups/use-group';
+import PromotionSlider from '@/components/promotions/promotion-slider';
+import ErrorMessage from '@/components/ui/error-message';
+import { useType } from '@/framework/type';
 
-const PromotionSliders: React.FC = () => {
-  const { group, error } = useGroup();
-
+export default function PromotionSliders({ variables }: any) {
+  const { type, error } = useType(variables.type);
   if (error) return <ErrorMessage message={error.message} />;
-  if (!group?.promotional_sliders) return null;
-  return <PromotionSlider sliders={group?.promotional_sliders} />;
-};
-
-export default PromotionSliders;
+  if (!type?.promotional_sliders) return null;
+  return <PromotionSlider sliders={type?.promotional_sliders} />;
+}

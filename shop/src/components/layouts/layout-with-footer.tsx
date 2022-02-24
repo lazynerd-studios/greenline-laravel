@@ -1,4 +1,4 @@
-import useLayout from '@framework/utils/use-layout';
+import useLayout from '@/lib/hooks/use-layout';
 import Footer from './footer';
 import Header from './header';
 import HeaderMinimal from './header-minimal';

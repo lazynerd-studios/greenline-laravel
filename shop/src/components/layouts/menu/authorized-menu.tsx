@@ -1,15 +1,16 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
-import { siteSettings } from '@settings/site';
-import Avatar from '@components/ui/avatar';
+import { siteSettings } from '@/settings/site';
+import Avatar from '@/components/ui/avatar';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import cn from 'classnames';
-import { avatarPlaceholder } from '@lib/placeholders';
-import useUser from '@framework/auth/use-user';
-import { UserOutlinedIcon } from '@components/icons/user-outlined';
+import { avatarPlaceholder } from '@/lib/placeholders';
+import { UserOutlinedIcon } from '@/components/icons/user-outlined';
+import { useLogout, useUser } from '@/framework/user';
 
 const AuthorizedMenu: React.FC<{ minimal?: boolean }> = ({ minimal }) => {
+  const { mutate: logout } = useLogout();
   const { me } = useUser();
   const router = useRouter();
   const { t } = useTranslation('common');
@@ -19,15 +20,18 @@ const AuthorizedMenu: React.FC<{ minimal?: boolean }> = ({ minimal }) => {
   }
 
   return (
-    <Menu as="div" className="relative inline-block text-left">
+    <Menu
+      as="div"
+      className="relative inline-block ltr:text-left rtl:text-right"
+    >
       <Menu.Button className="flex items-center focus:outline-none">
         {minimal ? (
-          <UserOutlinedIcon className="w-5 h-5" />
+          <UserOutlinedIcon className="h-5 w-5" />
         ) : (
           <Avatar
             src={me?.profile?.avatar?.thumbnail ?? avatarPlaceholder}
             title="user name"
-            className="w-10 h-10"
+            className="h-10 w-10"
           />
         )}
         <span className="sr-only">{t('user-avatar')}</span>
@@ -45,14 +49,14 @@ const AuthorizedMenu: React.FC<{ minimal?: boolean }> = ({ minimal }) => {
         <Menu.Items
           as="ul"
           className={cn(
-            'absolute end-0 w-48 pb-4 mt-1 origin-top-end bg-white rounded shadow-700 focus:outline-none',
+            'absolute mt-1 w-48 rounded bg-white pb-4 shadow-700 focus:outline-none ltr:right-0 ltr:origin-top-right rtl:left-0 rtl:origin-top-left',
             {
               '!mt-2': minimal,
             }
           )}
         >
           <Menu.Item>
-            <li className="flex justify-between items-center w-full py-4 px-6 text-xs text-start font-semibold capitalize text-light focus:outline-none bg-accent-500">
+            <li className="flex w-full items-center justify-between bg-accent-500 px-6 py-4 text-xs font-semibold capitalize text-light focus:outline-none ltr:text-left rtl:text-right">
               <span>{t('text-points')}</span>
               <span>{me?.wallet?.available_points ?? 0}</span>
             </li>
@@ -64,7 +68,7 @@ const AuthorizedMenu: React.FC<{ minimal?: boolean }> = ({ minimal }) => {
                   <button
                     onClick={() => handleClick(href)}
                     className={cn(
-                      'block w-full py-2.5 px-6 text-sm text-start font-semibold capitalize text-heading transition duration-200 hover:text-accent focus:outline-none',
+                      'block w-full py-2.5 px-6 text-sm font-semibold capitalize text-heading transition duration-200 hover:text-accent focus:outline-none ltr:text-left rtl:text-right',
                       active ? 'text-accent' : 'text-heading'
                     )}
                   >
@@ -74,6 +78,18 @@ const AuthorizedMenu: React.FC<{ minimal?: boolean }> = ({ minimal }) => {
               )}
             </Menu.Item>
           ))}
+          <Menu.Item>
+            <li>
+              <button
+                onClick={() => logout()}
+                className={cn(
+                  'block w-full py-2.5 px-6 text-sm font-semibold capitalize text-heading transition duration-200 hover:text-accent focus:outline-none ltr:text-left rtl:text-right'
+                )}
+              >
+                {t('auth-menu-logout')}
+              </button>
+            </li>
+          </Menu.Item>
         </Menu.Items>
       </Transition>
     </Menu>

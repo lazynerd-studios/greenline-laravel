@@ -1,9 +1,9 @@
-import { Swiper, SwiperSlide, Navigation } from '@components/ui/slider';
-import { Image } from '@components/ui/image';
-import { Banner } from '@framework/types';
-import { productPlaceholder } from '@lib/placeholders';
-import { useIsRTL } from '@lib/locals';
-import { ArrowNext, ArrowPrev } from '@components/icons';
+import { Swiper, SwiperSlide, Navigation } from '@/components/ui/slider';
+import { Image } from '@/components/ui/image';
+import { Banner } from '@/framework/types';
+import { productPlaceholder } from '@/lib/placeholders';
+import { useIsRTL } from '@/lib/locals';
+import { ArrowNext, ArrowPrev } from '@/components/icons';
 import { useTranslation } from 'next-i18next';
 
 interface BannerProps {
@@ -47,7 +47,7 @@ const BannerShort: React.FC<BannerProps> = ({ banners }) => {
             ))}
           </Swiper>
           <div
-            className="prev cursor-pointer absolute top-2/4 start-4 md:start-5 z-10 -mt-4 md:-mt-5 w-8 h-8 rounded-full bg-light shadow-200 border border-border-200 border-opacity-70 flex items-center justify-center text-heading transition-all duration-200"
+            className="prev cursor-pointer absolute top-2/4 ltr:left-4 rtl:right-4 ltr:md:left-5 rtl:md:right-5 z-10 -mt-4 md:-mt-5 w-8 h-8 rounded-full bg-light shadow-200 border border-border-200 border-opacity-70 flex items-center justify-center text-heading transition-all duration-200"
             role="button"
           >
             <span className="sr-only">{t('text-previous')}</span>
@@ -59,7 +59,7 @@ const BannerShort: React.FC<BannerProps> = ({ banners }) => {
             )}
           </div>
           <div
-            className="next cursor-pointer absolute top-2/4 end-4 md:end-5 z-10 -mt-4 md:-mt-5 w-8 h-8 rounded-full bg-light shadow-200 border border-border-200 border-opacity-70 flex items-center justify-center text-heading transition-all duration-200"
+            className="next cursor-pointer absolute top-2/4 ltr:right-4 rtl:left-4 ltr:md:right-5 rtl:md:left-5 z-10 -mt-4 md:-mt-5 w-8 h-8 rounded-full bg-light shadow-200 border border-border-200 border-opacity-70 flex items-center justify-center text-heading transition-all duration-200"
             role="button"
           >
             <span className="sr-only">{t('text-next')}</span>

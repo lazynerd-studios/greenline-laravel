@@ -1,12 +1,12 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/router';
 import cn from 'classnames';
-import { ExpandLessIcon } from '@components/icons/expand-less-icon';
-import { ExpandMoreIcon } from '@components/icons/expand-more-icon';
-import { getIcon } from '@lib/get-icon';
-import * as CategoryIcons from '@components/icons/category';
+import { ExpandLessIcon } from '@/components/icons/expand-less-icon';
+import { ExpandMoreIcon } from '@/components/icons/expand-more-icon';
+import { getIcon } from '@/lib/get-icon';
+import * as CategoryIcons from '@/components/icons/category';
 import { useEffect, useState } from 'react';
-import { drawerAtom } from '@store/drawer-atom';
+import { drawerAtom } from '@/store/drawer-atom';
 import { useAtom } from 'jotai';
 
 interface TreeMenuItemProps {
@@ -77,13 +77,13 @@ const TreeMenuItem: React.FC<TreeMenuItemProps> = ({
       >
         <button
           className={cn(
-            'flex items-center w-full py-2 text-start outline-none text-body-dark font-semibold  focus:outline-none focus:ring-0 focus:text-accent transition-all ease-in-expo',
+            'flex items-center w-full py-2 ltr:text-left rtl:text-right outline-none text-body-dark font-semibold  focus:outline-none focus:ring-0 focus:text-accent transition-all ease-in-expo',
             isOpen ? 'text-accent' : 'text-body-dark',
             className ? className : 'text-sm'
           )}
         >
           {icon && (
-            <span className="flex w-5 h-5 me-4 items-center justify-center">
+            <span className="flex w-5 h-5 ltr:mr-4 rtl:ml-4 items-center justify-center">
               {getIcon({
                 iconList: CategoryIcons,
                 iconName: icon,
@@ -92,7 +92,7 @@ const TreeMenuItem: React.FC<TreeMenuItemProps> = ({
             </span>
           )}
           <span>{name}</span>
-          <span className="ms-auto">{expandIcon}</span>
+          <span className="ltr:ml-auto rtl:mr-auto">{expandIcon}</span>
         </button>
       </motion.li>
       <AnimatePresence initial={false}>
@@ -108,7 +108,7 @@ const TreeMenuItem: React.FC<TreeMenuItemProps> = ({
                 collapsed: { opacity: 0, height: 0 },
               }}
               transition={{ duration: 0.8, ease: [0.04, 0.62, 0.23, 0.98] }}
-              className="ms-4 text-xs"
+              className="ltr:ml-4 rtl:mr-4 text-xs"
             >
               {items.map((currentItem) => {
                 const childDepth = depth + 1;
@@ -117,7 +117,7 @@ const TreeMenuItem: React.FC<TreeMenuItemProps> = ({
                     key={`${currentItem.name}${currentItem.slug}`}
                     item={currentItem}
                     depth={childDepth}
-                    className={cn('text-sm text-body ms-5')}
+                    className={cn('text-sm text-body ltr:ml-5 rtl:mr-5')}
                   />
                 );
               })}

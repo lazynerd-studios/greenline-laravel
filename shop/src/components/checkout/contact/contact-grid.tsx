@@ -1,15 +1,14 @@
 import { useEffect } from 'react';
 import { useAtom } from 'jotai';
-import { customerContactAtom } from '@store/checkout';
-import { useModalAction } from '@components/ui/modal/modal.context';
-import ContactCard from '@components/ui/contact-card';
-import { PlusIcon } from '@components/icons/plus-icon';
+import { customerContactAtom } from '@/store/checkout';
+import { useModalAction } from '@/components/ui/modal/modal.context';
+import { PlusIcon } from '@/components/icons/plus-icon';
 import { useTranslation } from 'next-i18next';
 import classNames from 'classnames';
-import { useSettings } from '@components/settings/settings.context';
+import PhoneInput from '@/components/ui/forms/phone-input';
 
 interface ContactProps {
-  contact: string | undefined;
+  contact: string | undefined | null;
   label: string;
   count?: number;
   className?: string;
@@ -26,55 +25,50 @@ const ContactGrid = ({
   const [contactNumber, setContactNumber] = useAtom(customerContactAtom);
   const { openModal } = useModalAction();
   const { t } = useTranslation('common');
-  const { useOtp } = useSettings();
 
   useEffect(() => {
     if (contact) {
       setContactNumber(contact);
+      return;
     }
+    setContactNumber('');
   }, [contact, setContactNumber]);
 
   function onAddOrChange() {
-    if (useOtp) {
-      openModal('ADD_OR_UPDATE_CHECKOUT_CONTACT');
-    } else {
-      openModal('ADD_OR_UPDATE_CHECKOUT_CONTACT_WITHOUT_OTP');
-    }
+    openModal('ADD_OR_UPDATE_CHECKOUT_CONTACT');
   }
   return (
     <div className={className}>
       <div
-        className={classNames('flex items-center justify-between mb-5', {
+        className={classNames('mb-5 flex items-center justify-between', {
           'md:mb-8': count,
         })}
       >
-        <div className="flex items-center space-s-3 md:space-s-4">
+        <div className="flex items-center space-x-3 rtl:space-x-reverse md:space-x-4">
           {count && (
-            <span className="rounded-full w-8 h-8 bg-accent flex items-center justify-center text-base lg:text-xl text-light">
+            <span className="flex items-center justify-center w-8 h-8 text-base rounded-full bg-accent text-light lg:text-xl">
               {count}
             </span>
           )}
-          <p className="text-lg lg:text-xl text-heading capitalize">{label}</p>
+          <p className="text-lg capitalize text-heading lg:text-xl">{label}</p>
         </div>
 
         <button
-          className="flex items-center text-sm font-semibold text-accent transition-colors duration-200 focus:outline-none focus:text-accent-hover hover:text-accent-hover"
+          className="flex items-center text-sm font-semibold transition-colors duration-200 text-accent hover:text-accent-hover focus:text-accent-hover focus:outline-none"
           onClick={onAddOrChange}
         >
-          <PlusIcon className="w-4 h-4 stroke-2 me-0.5" />
+          <PlusIcon className="h-4 w-4 stroke-2 ltr:mr-0.5 rtl:ml-0.5" />
           {contactNumber ? t('text-update') : t('text-add')}
         </button>
       </div>
 
-      <div
-        className={classNames(
-          'grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3',
-          gridClassName
-        )}
-      >
-        <ContactCard
-          checked={Boolean(contactNumber)}
-          number={Boolean(contactNumber) ? contactNumber : t('text-no-contact')}
+      <div className={classNames('w-full', gridClassName)}>
+        <PhoneInput
+          country="us"
+          value={contactNumber}
+          disabled={true}
+          inputClass="!p-0 ltr:!pr-4 rtl:!pl-4 ltr:!pl-14 rtl:!pr-14 !flex !items-center !w-full !appearance-none !transition !duration-300 !ease-in-out !text-heading !text-sm focus:!outline-none focus:!ring-0 !border !border-border-base !rounded focus:!border-accent !h-12"
+          dropdownClass="focus:!ring-0 !border !border-border-base !shadow-350"
         />
       </div>
     </div>

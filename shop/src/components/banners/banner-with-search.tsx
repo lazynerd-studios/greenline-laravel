@@ -1,12 +1,12 @@
 import cn from 'classnames';
 import { Waypoint } from 'react-waypoint';
-import { Swiper, SwiperSlide, Navigation } from '@components/ui/slider';
-import { Image } from '@components/ui/image';
-import { Banner } from '@framework/types';
-import { productPlaceholder } from '@lib/placeholders';
-import Search from '@components/ui/search/search';
+import { Swiper, SwiperSlide, Navigation } from '@/components/ui/slider';
+import { Image } from '@/components/ui/image';
+import { Banner } from '@/framework/types';
+import { productPlaceholder } from '@/lib/placeholders';
+import Search from '@/components/ui/search/search';
 import { useAtom } from 'jotai';
-import { displayHeaderSearchAtom } from '@store/display-header-search-atom';
+import { displayHeaderSearchAtom } from '@/store/display-header-search-atom';
 
 interface BannerProps {
   banners: Banner[] | undefined;

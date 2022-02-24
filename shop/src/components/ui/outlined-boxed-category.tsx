@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import cn from 'classnames';
-import { getIcon } from '@lib/get-icon';
-import * as CategoryIcons from '@components/icons/category';
+import { getIcon } from '@/lib/get-icon';
+import * as CategoryIcons from '@/components/icons/category';
 
 interface CategoryItemProps {
   item: any;

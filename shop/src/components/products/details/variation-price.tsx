@@ -1,4 +1,4 @@
-import usePrice from '@lib/use-price';
+import usePrice from '@/lib/use-price';
 import isEmpty from 'lodash/isEmpty';
 
 export default function VariationPrice({
@@ -30,7 +30,7 @@ export default function VariationPrice({
           : `${min_price} - ${max_price}`}
       </ins>
       {basePrice && (
-        <del className="text-sm md:text-base font-normal text-muted ms-2">
+        <del className="text-sm md:text-base font-normal text-muted ltr:ml-2 rtl:mr-2">
           {basePrice}
         </del>
       )}

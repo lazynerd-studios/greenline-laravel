@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import { useSettings } from '@components/settings/settings.context';
 import { useRouter } from 'next/router';
+import { useSettings } from '@/framework/settings';
 
 export function formatPrice({
   amount,
@@ -51,8 +51,10 @@ export default function usePrice(
     currencyCode?: string;
   } | null
 ) {
-  const { currency } = useSettings();
-  const { amount, baseAmount, currencyCode = currency } = data ?? {};
+  const {
+    settings: { currency },
+  } = useSettings();
+  const { amount, baseAmount, currencyCode = currency ?? 'USD' } = data ?? {};
   const { locale } = useRouter();
   const value = useMemo(() => {
     if (typeof amount !== 'number' || !currencyCode) return '';

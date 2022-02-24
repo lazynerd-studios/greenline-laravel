@@ -1,4 +1,4 @@
-import ArrowNarrowLeft from '@components/icons/arrow-narrow-left';
+import ArrowNarrowLeft from '@/components/icons/arrow-narrow-left';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import cn from 'classnames';
@@ -12,7 +12,7 @@ const BackButton = () => {
       onClick={router.back}
     >
       <ArrowNarrowLeft
-        className={cn('w-5 h-5 me-2', {
+        className={cn('w-5 h-5 ltr:mr-2 rtl:ml-2', {
           'transform rotate-180':
             router.locale === 'ar' || router.locale === 'he',
         })}

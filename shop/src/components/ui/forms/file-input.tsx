@@ -1,4 +1,4 @@
-import Uploader from '@framework/upload/uploader';
+import Uploader from '@/components/ui/forms/uploader';
 import { Controller } from 'react-hook-form';
 
 interface FileInputProps {

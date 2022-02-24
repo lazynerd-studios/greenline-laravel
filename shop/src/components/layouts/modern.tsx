@@ -1,29 +1,25 @@
-import Banner from '@components/banners/banner';
-import Categories from '@components/categories/categories';
-// import Products from '@framework/products/products';
-import ProductsGrid from '@components/products/grid';
+import Banner from '@/components/banners/banner';
+import Categories from '@/components/categories/categories';
 import { Element } from 'react-scroll';
+import ProductGridHome from '@/components/products/grids/home';
 import FilterBar from './filter-bar';
+import type { HomePageProps } from '@/types';
 
-const Modern = () => {
+export default function Modern({ variables }: HomePageProps) {
   return (
     <div className="flex flex-1 bg-gray-100">
-      <div className="sticky top-22 h-full lg:w-[380px] hidden xl:block bg-gray-100">
-        <Categories layout="modern" />
+      <div className="sticky top-22 hidden h-full bg-gray-100 lg:w-[380px] xl:block">
+        <Categories layout="modern" variables={variables.categories} />
       </div>
-
-      <main className="w-full xl:overflow-hidden block lg:mt-6 xl:ps-0 xl:pe-5">
+      <main className="block w-full lg:mt-6 xl:overflow-hidden ltr:xl:pl-0 ltr:xl:pr-5 rtl:xl:pr-0 rtl:xl:pl-5">
         <div className="border border-border-200">
-          <Banner layout="modern" />
+          <Banner layout="modern" variables={variables.types} />
         </div>
-        <FilterBar />
+        <FilterBar variables={variables.categories} />
         <Element name="grid" className="px-4 xl:px-0">
-          {/* <Products layout="modern" /> */}
-          <ProductsGrid className="py-6" limit={30} />
+          <ProductGridHome className="py-6" variables={variables.products} />
         </Element>
       </main>
     </div>
   );
-};
-
-export default Modern;
+}

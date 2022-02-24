@@ -14,35 +14,37 @@ export interface IGetProducts {
   type?: Maybe<string>;
   limit: number;
   text?: string;
-  shopId?: number;
-  category?: string;
+  shop_id?: number;
+  categories?: string;
   author?: string;
   page?: number;
   status?: ProductStatus;
-  orderField?: QueryProductsOrderByColumn;
-  sortOrder?: SortOrder;
+  orderBy?: QueryProductsOrderByColumn;
+  sortedBy?: SortOrder;
   manufacturer?: string;
   tags?: string;
-  priceRange?: string;
+  price?: string;
+  searchQuery?: string;
 }
 
 export const getProducts = ({
+  searchQuery,
   type,
   limit,
   text,
-  category,
-  shopId,
-  priceRange,
+  categories,
+  shop_id,
+  price,
   manufacturer,
   author,
   tags,
   page = 1,
   status = ProductStatus.Publish,
-  orderField = QueryProductsOrderByColumn.CreatedAt,
-  sortOrder = SortOrder.Asc,
+  orderBy = QueryProductsOrderByColumn.CreatedAt,
+  sortedBy = SortOrder.Asc,
 }: IGetProducts) => {
   return {
-    ...(!shopId &&
+    ...(!shop_id &&
       !author &&
       !manufacturer &&
       type && {
@@ -52,13 +54,14 @@ export const getProducts = ({
           value: type,
         },
       }),
-    ...(shopId && { shop_id: shopId }),
+    ...(shop_id && { shop_id: shop_id }),
     ...(text && { text: `%${text}%` }),
-    ...(category && {
+    ...(searchQuery && { text: `%${searchQuery}%` }),
+    ...(categories && {
       hasCategories: {
         column: QueryCategoriesHasTypeColumn.Slug,
         operator: SqlOperator.In,
-        value: category.split(','),
+        value: categories.split(','),
       },
     }),
     ...(manufacturer && {
@@ -82,16 +85,16 @@ export const getProducts = ({
         value: author.split(','),
       },
     }),
-    ...(orderField && {
-      orderBy: [{ column: orderField.toUpperCase(), order: sortOrder }],
+    ...(orderBy && {
+      orderBy: [{ column: orderBy.toUpperCase(), order: sortedBy }],
     }),
     page,
     status,
     first: limit,
-    ...(priceRange && {
+    ...(price && {
       min_price: {
-        from: +priceRange.split(',')[0],
-        to: +priceRange.split(',')[1],
+        from: +price.split(',')[0],
+        to: +price.split(',')[1],
       },
     }),
   };

@@ -1,28 +1,20 @@
 import { signIn } from 'next-auth/react';
-import Logo from '@components/ui/logo';
-import Alert from '@components/ui/alert';
-import Input from '@components/ui/forms/input';
-import PasswordInput from '@components/ui/forms/password-input';
-import Button from '@components/ui/button';
+import Logo from '@/components/ui/logo';
+import Alert from '@/components/ui/alert';
+import Input from '@/components/ui/forms/input';
+import PasswordInput from '@/components/ui/forms/password-input';
+import Button from '@/components/ui/button';
 import { useTranslation } from 'next-i18next';
 import * as yup from 'yup';
-import { GoogleIcon } from '@components/icons/google';
-import { useModalAction } from '@components/ui/modal/modal.context';
-import { MobileIcon } from '@components/icons/mobile-icon';
-import { Form } from '@components/ui/forms/form';
-import { AnonymousIcon } from '@components/icons/anonymous-icon';
+import { GoogleIcon } from '@/components/icons/google';
+import { useModalAction } from '@/components/ui/modal/modal.context';
+import { MobileIcon } from '@/components/icons/mobile-icon';
+import { Form } from '@/components/ui/forms/form';
+import { useLogin } from '@/framework/user';
+import type { LoginUserInput } from '@/types';
+import { AnonymousIcon } from '@/components/icons/anonymous-icon';
 import { useRouter } from 'next/router';
-import { ROUTES } from '@lib/routes';
-
-interface LoginFormProps {
-  errorMessage: string;
-  onSubmit: (formData: any) => void;
-  loading: boolean;
-}
-type FormValues = {
-  email: string;
-  password: string;
-};
+import { ROUTES } from '@/lib/routes';
 
 const loginFormSchema = yup.object().shape({
   email: yup
@@ -31,34 +23,33 @@ const loginFormSchema = yup.object().shape({
     .required('error-email-required'),
   password: yup.string().required('error-password-required'),
 });
-const LoginForm: React.FC<LoginFormProps> = ({
-  onSubmit,
-  loading,
-  errorMessage,
-}) => {
-  const router = useRouter();
+function LoginForm() {
   const { t } = useTranslation('common');
+  const router = useRouter();
   const { openModal } = useModalAction();
   const isCheckout = router.pathname.includes('checkout');
+  const { mutate: login, isLoading, serverError, setServerError } = useLogin();
+
+  function onSubmit({ email, password }: LoginUserInput) {
+    login({
+      email,
+      password,
+    });
+  }
 
   return (
-    <div className="py-6 px-5 sm:p-8 bg-light w-screen md:max-w-[480px] min-h-screen md:min-h-0 h-full md:h-auto flex flex-col justify-center md:rounded-xl">
-      <div className="flex justify-center">
-        <Logo />
-      </div>
-      <p className="text-center text-sm md:text-base text-body mt-4 sm:mt-5 mb-8 sm:mb-10">
-        {t('login-helper')}
-      </p>
-      {errorMessage && (
-        <Alert
-          variant="error"
-          message={t(errorMessage)}
-          className="mb-6"
-          closeable={true}
-          // onClose={() => setErrorMsg('')}
-        />
-      )}
-      <Form<FormValues> onSubmit={onSubmit} validationSchema={loginFormSchema}>
+    <>
+      <Alert
+        variant="error"
+        message={serverError && t(serverError)}
+        className="mb-6"
+        closeable={true}
+        onClose={() => setServerError(null)}
+      />
+      <Form<LoginUserInput>
+        onSubmit={onSubmit}
+        validationSchema={loginFormSchema}
+      >
         {({ register, formState: { errors } }) => (
           <>
             <Input
@@ -79,9 +70,9 @@ const LoginForm: React.FC<LoginFormProps> = ({
             />
             <div className="mt-8">
               <Button
-                className="w-full h-11 sm:h-12"
-                loading={loading}
-                disabled={loading}
+                className="h-11 w-full sm:h-12"
+                loading={isLoading}
+                disabled={isLoading}
               >
                 {t('text-login')}
               </Button>
@@ -89,62 +80,72 @@ const LoginForm: React.FC<LoginFormProps> = ({
           </>
         )}
       </Form>
-      {/* End of forgot login form */}
-
-      <div className="flex flex-col items-center justify-center relative text-sm text-heading mt-8 sm:mt-11 mb-6 sm:mb-8">
+      {/* //===============// */}
+      <div className="relative mt-8 mb-6 flex flex-col items-center justify-center text-sm text-heading sm:mt-11 sm:mb-8">
         <hr className="w-full" />
-        <span className="absolute start-2/4 -top-2.5 px-2 -ms-4 bg-light">
+        <span className="absolute -top-2.5 bg-light px-2 ltr:left-2/4 ltr:-ml-4 rtl:right-2/4 rtl:-mr-4">
           {t('text-or')}
         </span>
       </div>
-
-      <div className="grid grid-cols-1 gap-4 mt-2">
+      <div className="mt-2 grid grid-cols-1 gap-4">
         <Button
-          className="!bg-social-google hover:!bg-social-google-hover !text-light"
-          disabled={loading}
+          className="!bg-social-google !text-light hover:!bg-social-google-hover"
+          disabled={isLoading}
           onClick={() => {
             signIn('google');
           }}
         >
-          <GoogleIcon className="w-4 h-4 me-3" />
+          <GoogleIcon className="h-4 w-4 ltr:mr-3 rtl:ml-3" />
           {t('text-login-google')}
         </Button>
 
         <Button
-          className="w-full h-11 sm:h-12 !bg-gray-500 hover:!bg-gray-600 !text-light"
-          disabled={loading}
+          className="h-11 w-full !bg-gray-500 !text-light hover:!bg-gray-600 sm:h-12"
+          disabled={isLoading}
           onClick={() => openModal('OTP_LOGIN')}
         >
-          <MobileIcon className="h-5 me-2 text-light" />
+          <MobileIcon className="h-5 text-light ltr:mr-2 rtl:ml-2" />
           {t('text-login-mobile')}
         </Button>
 
         {isCheckout && (
           <Button
-            className="w-full h-11 sm:h-12 !bg-pink-700 hover:!bg-pink-800 !text-light"
-            disabled={loading}
+            className="h-11 w-full !bg-pink-700 !text-light hover:!bg-pink-800 sm:h-12"
+            disabled={isLoading}
             onClick={() => router.push(`${ROUTES.CHECKOUT}/guest`)}
           >
-            <AnonymousIcon className="h-6 me-2 text-light" />
+            <AnonymousIcon className="h-6 text-light ltr:mr-2 rtl:ml-2" />
             {t('text-guest-checkout')}
           </Button>
         )}
       </div>
-
-      <div className="flex flex-col items-center justify-center relative text-sm text-heading mt-8 sm:mt-11 mb-6 sm:mb-8">
+      <div className="relative mt-8 mb-6 flex flex-col items-center justify-center text-sm text-heading sm:mt-11 sm:mb-8">
         <hr className="w-full" />
       </div>
-      <div className="text-sm sm:text-base text-body text-center">
+      <div className="text-center text-sm text-body sm:text-base">
         {t('text-no-account')}{' '}
         <button
           onClick={() => openModal('REGISTER')}
-          className="ms-1 underline text-accent font-semibold transition-colors duration-200 focus:outline-none hover:text-accent-hover focus:text-accent-hover hover:no-underline focus:no-underline"
+          className="font-semibold text-accent underline transition-colors duration-200 hover:text-accent-hover hover:no-underline focus:text-accent-hover focus:no-underline focus:outline-none ltr:ml-1 rtl:mr-1"
         >
           {t('text-register')}
         </button>
       </div>
+    </>
+  );
+}
+
+export default function LoginView() {
+  const { t } = useTranslation('common');
+  return (
+    <div className="flex h-full min-h-screen w-screen flex-col justify-center bg-light py-6 px-5 sm:p-8 md:h-auto md:min-h-0 md:max-w-[480px] md:rounded-xl">
+      <div className="flex justify-center">
+        <Logo />
+      </div>
+      <p className="mt-4 mb-8 text-center text-sm text-body sm:mt-5 sm:mb-10 md:text-base">
+        {t('login-helper')}
+      </p>
+      <LoginForm />
     </div>
   );
-};
-
-export default LoginForm;
+}

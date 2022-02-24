@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import { Image } from '@components/ui/image';
+import { Image } from '@/components/ui/image';
 
 type AvatarProps = {
   className?: string;

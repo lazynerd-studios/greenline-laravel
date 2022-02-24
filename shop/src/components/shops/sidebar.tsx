@@ -1,23 +1,24 @@
 import cn from 'classnames';
-import { Image } from '@components/ui/image';
+import { Image } from '@/components/ui/image';
 import { useTranslation } from 'next-i18next';
-import { formatAddress } from '@lib/format-address';
+import { formatAddress } from '@/lib/format-address';
 import isEmpty from 'lodash/isEmpty';
-import ReadMore from '@components/ui/truncate';
-import { useModalAction } from '@components/ui/modal/modal.context';
-import Scrollbar from '@components/ui/scrollbar';
-import { getIcon } from '@lib/get-icon';
-import { productPlaceholder } from '@lib/placeholders';
-import * as socialIcons from '@components/icons/social';
+import ReadMore from '@/components/ui/truncate';
+import { useModalAction } from '@/components/ui/modal/modal.context';
+import Scrollbar from '@/components/ui/scrollbar';
+import { getIcon } from '@/lib/get-icon';
+import { productPlaceholder } from '@/lib/placeholders';
+import * as socialIcons from '@/components/icons/social';
+import type { Shop } from '@/types';
 
 type ShopSidebarProps = {
-  data: any;
+  shop: Shop;
   className?: string;
   cardClassName?: string;
 };
 
 const ShopSidebar: React.FC<ShopSidebarProps> = ({
-  data,
+  shop,
   className,
   cardClassName,
 }) => {
@@ -25,7 +26,7 @@ const ShopSidebar: React.FC<ShopSidebarProps> = ({
   const { openModal } = useModalAction();
 
   function handleMoreInfoModal() {
-    return openModal('SHOP_INFO', data);
+    return openModal('SHOP_INFO', { shop });
   }
   return (
     <>
@@ -35,19 +36,17 @@ const ShopSidebar: React.FC<ShopSidebarProps> = ({
           cardClassName
         )}
       >
-        <div className="w-16 h-16 rounded-lg relative mx-auto border border-gray-100 bg-gray-200 overflow-hidden me-4 flex-shrink-0">
+        <div className="relative w-16 h-16 mx-auto overflow-hidden bg-gray-200 border border-gray-100 rounded-lg ltr:mr-4 rtl:ml-4 shrink-0">
           <Image
             alt={t('logo')}
-            src={data?.shop?.logo?.original! ?? productPlaceholder}
+            src={shop?.logo?.original! ?? productPlaceholder}
             layout="fill"
             objectFit="cover"
           />
         </div>
 
         <div className="w-full">
-          <h3 className="text-base font-semibold text-heading">
-            {data?.shop?.name}
-          </h3>
+          <h3 className="text-base font-semibold text-heading">{shop.name}</h3>
 
           <button
             className="text-sm font-semibold transition text-accent hover:text-accent-hover"
@@ -66,84 +65,82 @@ const ShopSidebar: React.FC<ShopSidebarProps> = ({
       >
         <div className="max-h-full overflow-hidden">
           <Scrollbar className={cn('w-full', 'scrollbar_height')}>
-            <div className="w-full border-b border-gray-200 p-7 flex flex-col items-center">
-              <div className="w-44 h-44 rounded-lg relative mx-auto border border-gray-100 bg-gray-200 overflow-hidden mb-8">
+            <div className="flex flex-col items-center w-full border-b border-gray-200 p-7">
+              <div className="relative mx-auto mb-8 overflow-hidden bg-gray-200 border border-gray-100 rounded-lg w-44 h-44">
                 <Image
                   alt={t('logo')}
-                  src={data?.shop?.logo?.original! ?? productPlaceholder}
+                  src={shop?.logo?.original! ?? productPlaceholder}
                   layout="fill"
                   objectFit="cover"
                 />
               </div>
 
-              <h3 className="text-lg font-semibold text-heading mb-2">
-                {data?.shop?.name}
+              <h3 className="mb-2 text-lg font-semibold text-heading">
+                {shop.name}
               </h3>
 
-              {data?.shop?.description && (
-                <p className="text-sm text-body mb-2 text-center leading-relaxed">
-                  <ReadMore character={70}>{data?.shop?.description}</ReadMore>
+              {shop?.description && (
+                <p className="mb-2 text-sm leading-relaxed text-center text-body">
+                  <ReadMore character={70}>{shop.description}</ReadMore>
                 </p>
               )}
 
               <div className="flex items-center justify-start mt-3">
-                {data?.shop?.settings?.socials?.map(
-                  (item: any, index: number) => (
-                    <a
-                      key={index}
-                      href={item.url}
-                      target="_blank"
-                      className={`text-muted focus:outline-none me-6 last:me-0 transition-colors duration-300 hover:${item.hoverClass}`}
-                      rel="noreferrer"
-                    >
-                      {getIcon({
-                        iconList: socialIcons,
-                        iconName: item.icon,
-                        className: 'w-4 h-4',
-                      })}
-                    </a>
-                  )
-                )}
+                {shop?.settings?.socials?.map((item: any, index: number) => (
+                  <a
+                    key={index}
+                    href={item.url}
+                    target="_blank"
+                    className={`text-muted focus:outline-none ltr:mr-6 rtl:ml-6 ltr:last:mr-0 rtl:last:ml-0 transition-colors duration-300 hover:${item.hoverClass}`}
+                    rel="noreferrer"
+                  >
+                    {getIcon({
+                      iconList: socialIcons,
+                      iconName: item.icon,
+                      className: 'w-4 h-4',
+                    })}
+                  </a>
+                ))}
               </div>
             </div>
 
             <div className="p-7">
-              <div className="mb-7 last:mb-0 flex flex-col">
-                <span className="text-sm text-heading font-semibold mb-2">
+              <div className="flex flex-col mb-7 last:mb-0">
+                <span className="mb-2 text-sm font-semibold text-heading">
                   {t('text-address')}
                 </span>
                 <span className="text-sm text-body">
-                  {!isEmpty(formatAddress(data?.shop?.address))
-                    ? formatAddress(data?.shop?.address)
+                  {!isEmpty(formatAddress(shop?.address))
+                    ? formatAddress(shop?.address)
                     : t('common:text-no-address')}
                 </span>
               </div>
 
-              <div className="mb-7 last:mb-0 flex flex-col">
-                <span className="text-sm text-heading font-semibold mb-2">
+              <div className="flex flex-col mb-7 last:mb-0">
+                <span className="mb-2 text-sm font-semibold text-heading">
                   {t('text-phone')}
                 </span>
                 <span className="text-sm text-body">
-                  {data?.shop?.settings?.contact
-                    ? data?.shop?.settings?.contact
+                  {shop?.settings?.contact
+                    ? shop?.settings?.contact
                     : t('text-no-contact')}
                 </span>
               </div>
 
-              {data?.shop?.settings?.website && (
+              {shop?.settings?.website && (
                 <div className="flex flex-col">
-                  <span className="text-sm text-heading font-semibold mb-2">
+                  <span className="mb-2 text-sm font-semibold text-heading">
                     {t('text-website')}
                   </span>
 
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-body">
-                      {data?.shop?.settings?.website}
+                      {shop.settings.website}
                     </span>
                     <a
-                      href={data?.shop?.settings?.website}
+                      href={shop.settings.website}
                       target="_blank"
-                      className="text-sm text-accent font-semibold hover:text-accent-hover focus:outline-none focus:text-accent-hover"
+                      className="text-sm font-semibold text-accent hover:text-accent-hover focus:outline-none focus:text-accent-hover"
                       rel="noreferrer"
                     >
                       {t('text-visit-site')}

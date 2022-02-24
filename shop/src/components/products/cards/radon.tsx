@@ -1,11 +1,11 @@
-import Link from '@components/ui/link';
-import { Image } from '@components/ui/image';
+import Link from '@/components/ui/link';
+import { Image } from '@/components/ui/image';
 import cn from 'classnames';
 import { useTranslation } from 'next-i18next';
-import { ROUTES } from '@lib/routes';
-import { Product } from '@framework/types';
-import { productPlaceholder } from '@lib/placeholders';
-import usePrice from '@lib/use-price';
+import { ROUTES } from '@/lib/routes';
+import { Product } from '@/framework/types';
+import { productPlaceholder } from '@/lib/placeholders';
+import usePrice from '@/lib/use-price';
 
 type RadonProps = {
   product: Product;
@@ -48,7 +48,7 @@ const Radon: React.FC<RadonProps> = ({ product, className }) => {
       </Link>
       {/* End of product image */}
 
-      <header className="pt-4 flex flex-col flex-shrink-0 space-y-2">
+      <header className="pt-4 flex flex-col shrink-0 space-y-2">
         {name && (
           <Link
             href={`${ROUTES.PRODUCT}/${slug}`}
@@ -64,14 +64,14 @@ const Radon: React.FC<RadonProps> = ({ product, className }) => {
             {t('text-by')}
             <Link
               href={`${ROUTES.AUTHORS}/${author?.slug!}`}
-              className="text-body transition-colors hover:text-orange-500 ms-1"
+              className="text-body transition-colors hover:text-orange-500 ltr:ml-1 rtl:mr-1"
             >
               {author?.name}
             </Link>
           </span>
         )}
 
-        <div className="flex items-center flex-shrink-0">
+        <div className="flex items-center shrink-0">
           {product_type.toLowerCase() === 'variable' ? (
             <p className="text-sm md:text-base text-orange-500 font-semibold">
               {minPrice}
@@ -81,12 +81,12 @@ const Radon: React.FC<RadonProps> = ({ product, className }) => {
               {maxPrice}
             </p>
           ) : (
-            <div className="flex items-center space-s-2.5">
+            <div className="flex items-center space-x-2.5 rtl:space-x-reverse">
               <span className="text-base text-orange-500 font-semibold">
                 {price}
               </span>
               {basePrice && (
-                <del className="text-xs text-gray-400 font-semibold me-2">
+                <del className="text-xs text-gray-400 font-semibold ltr:mr-2 rtl:ml-2">
                   {basePrice}
                 </del>
               )}

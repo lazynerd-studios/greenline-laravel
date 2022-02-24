@@ -1,4 +1,4 @@
-import { Attachment } from '@framework/types';
+import { Attachment } from '@/framework/types';
 
 export function displayImage(
   selectedVariationImage: Attachment | undefined,

@@ -32,7 +32,9 @@ class Category extends Model
      */
     public function getParentIdAttribute()
     {
-        return $this->parent;
+        if (isset($this->attributes['parent'])) {
+            return $this->parent;
+        }
     }
 
 

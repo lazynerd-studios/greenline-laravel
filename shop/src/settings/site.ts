@@ -1,4 +1,4 @@
-import { ROUTES } from '@lib/routes';
+import { ROUTES } from '@/lib/routes';
 export const siteSettings = {
   name: 'PickBazar',
   description: '',
@@ -27,7 +27,6 @@ export const siteSettings = {
     { href: ROUTES.PROFILE, label: 'auth-menu-profile' },
     { href: ROUTES.ORDERS, label: 'auth-menu-my-orders' },
     { href: ROUTES.CHECKOUT, label: 'auth-menu-checkout' },
-    { href: ROUTES.LOGOUT, label: 'auth-menu-logout' },
   ],
   authorizedLinksMobile: [
     { href: ROUTES.PROFILE, label: 'auth-menu-profile' },
@@ -120,7 +119,7 @@ export const siteSettings = {
             href: '/',
           },
           {
-            name: 'text-accessibility"',
+            name: 'text-accessibility',
             href: '/',
           },
           {

@@ -1,13 +1,13 @@
-import Coupon from '@framework/checkout/coupon';
-import usePrice from '@lib/use-price';
-import EmptyCartIcon from '@components/icons/empty-cart';
-import { CloseIcon } from '@components/icons/close-icon';
+import Coupon from '@/components/checkout/coupon';
+import usePrice from '@/lib/use-price';
+import EmptyCartIcon from '@/components/icons/empty-cart';
+import { CloseIcon } from '@/components/icons/close-icon';
 import { useTranslation } from 'next-i18next';
-import { useCart } from '@store/quick-cart/cart.context';
+import { useCart } from '@/store/quick-cart/cart.context';
 import {
   calculatePaidTotal,
   calculateTotal,
-} from '@store/quick-cart/cart.utils';
+} from '@/store/quick-cart/cart.utils';
 import { useAtom } from 'jotai';
 import {
   couponAtom,
@@ -15,12 +15,12 @@ import {
   payableAmountAtom,
   verifiedResponseAtom,
   walletAtom,
-} from '@store/checkout';
-import { ItemInfoRow } from '@components/checkout/digital/item-info-row';
-import PaymentGrid from '@components/checkout/payment/payment-grid';
-import { PlaceOrderAction } from '@framework/checkout/place-order-action';
-import Wallet from '@components/checkout/wallet/wallet';
-import CartItem from '@components/checkout/digital/cart-item';
+} from '@/store/checkout';
+import { ItemInfoRow } from '@/components/checkout/digital/item-info-row';
+import PaymentGrid from '@/components/checkout/payment/payment-grid';
+import { PlaceOrderAction } from '@/components/checkout/place-order-action';
+import Wallet from '@/components/checkout/wallet/wallet';
+import CartItem from '@/components/checkout/digital/cart-item';
 
 interface Props {
   className?: string;
@@ -80,7 +80,7 @@ const VerifiedItemList: React.FC<Props> = ({ className }) => {
   );
   return (
     <div className={className}>
-      <div className="flex flex-col border-b pb-2 border-border-200">
+      <div className="flex flex-col pb-2 border-b border-border-200">
         {!isEmptyCart ? (
           items?.map((item) => {
             const notAvailable = verifiedResponse?.unavailable_products?.find(
@@ -99,17 +99,19 @@ const VerifiedItemList: React.FC<Props> = ({ className }) => {
         )}
       </div>
 
-      <div className="space-y-3 mt-4">
+      <div className="mt-4 space-y-3">
         <ItemInfoRow title={t('text-sub-total')} value={sub_total} />
         <ItemInfoRow title={t('text-tax')} value={tax} />
         <ItemInfoRow title={t('text-shipping')} value={shipping} />
         {discount && coupon ? (
-          <div className="flex justify-between items-center">
-            <p className="text-sm text-gray-800 me-4">{t('text-discount')}</p>
-            <span className="text-xs font-semibold text-red-500 flex items-center me-auto">
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-gray-800 ltr:mr-4 rtl:ml-4">
+              {t('text-discount')}
+            </p>
+            <span className="flex items-center text-xs font-semibold text-red-500 ltr:mr-auto rtl:ml-auto">
               ({coupon?.code})
               <button onClick={() => setCoupon(null)}>
-                <CloseIcon className="w-3 h-3 ms-2" />
+                <CloseIcon className="w-3 h-3 ltr:ml-2 rtl:mr-2" />
               </button>
             </span>
             <span className="text-sm font-semibold text-gray-800">
@@ -121,7 +123,7 @@ const VerifiedItemList: React.FC<Props> = ({ className }) => {
             <Coupon theme="dark" />
           </div>
         )}
-        <div className="flex justify-between border-t-4 border-double border-border-200 pt-3">
+        <div className="flex justify-between pt-3 border-t-4 border-double border-border-200">
           <p className="text-base font-semibold text-heading">
             {t('text-total')}
           </p>
@@ -138,7 +140,7 @@ const VerifiedItemList: React.FC<Props> = ({ className }) => {
       {use_wallet && !Boolean(payableAmount) ? null : (
         <PaymentGrid
           theme="bw"
-          className="bg-light p-5 border border-gray-200 mt-10"
+          className="p-5 mt-10 border border-gray-200 bg-light"
         />
       )}
       <PlaceOrderAction className="w-full mt-8 font-normal h-[50px] !bg-gray-800 transition-colors hover:!bg-gray-900">

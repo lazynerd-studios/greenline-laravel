@@ -1,4 +1,4 @@
-import { CloseIcon } from '@components/icons/close-icon';
+import { CloseIcon } from '@/components/icons/close-icon';
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useRef } from 'react';
 import { useTranslation } from 'next-i18next';
@@ -46,12 +46,12 @@ export default function Modal({ open, onClose, children }: any) {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <div className="inline-block min-w-content max-w-full text-start align-middle transition-all relative">
+            <div className="inline-block min-w-content max-w-full ltr:text-left rtl:text-right align-middle transition-all relative">
               <button
                 onClick={onClose}
                 aria-label="Close panel"
                 ref={cancelButtonRef}
-                className="inline-block lg:hidden outline-none focus:outline-none absolute end-4 top-4 z-[60]"
+                className="inline-block lg:hidden outline-none focus:outline-none absolute ltr:right-4 rtl:left-4 top-4 z-[60]"
               >
                 <span className="sr-only">{t('text-close')}</span>
                 <CloseIcon className="w-4 h-4" />

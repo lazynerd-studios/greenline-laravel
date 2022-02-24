@@ -1,28 +1,25 @@
-import Logo from '@components/ui/logo';
+import Logo from '@/components/ui/logo';
 import { useAtom } from 'jotai';
-import { drawerAtom } from '@store/drawer-atom';
-import { CloseIcon } from '@components/icons/close-icon';
+import { drawerAtom } from '@/store/drawer-atom';
+import { CloseIcon } from '@/components/icons/close-icon';
 import { useTranslation } from 'next-i18next';
 
 const DrawerWrapper: React.FC = ({ children }) => {
   const { t } = useTranslation('common');
   const [_, closeSidebar] = useAtom(drawerAtom);
   return (
-    <div className="flex flex-col h-full">
-      <div className="flex fixed top-0 z-20 w-full max-w-md bg-white items-center justify-between p-5 mb-4 md:mb-6 border-b border-border-200 border-opacity-75">
+    <div className="flex h-full flex-col">
+      <div className="fixed top-0 z-20 mb-4 flex w-full max-w-md items-center justify-between border-b border-border-200 border-opacity-75 bg-white p-5 md:mb-6">
         <Logo className="w-24 md:w-auto" />
         <button
           onClick={() => closeSidebar({ display: false, view: '' })}
-          className="w-7 h-7 flex items-center justify-center rounded-full text-body bg-gray-200 transition-all duration-200 focus:outline-none hover:bg-accent focus:bg-accent hover:text-light focus:text-light"
+          className="flex h-7 w-7 items-center justify-center rounded-full bg-gray-200 text-body transition-all duration-200 hover:bg-accent hover:text-light focus:bg-accent focus:text-light focus:outline-none"
         >
           <span className="sr-only">{t('text-close')}</span>
-          <CloseIcon className="w-2.5 h-2.5" />
+          <CloseIcon className="h-2.5 w-2.5" />
         </button>
       </div>
-      {/* End of header part */}
-
       <div className="pt-20">{children}</div>
-      {/* End of menu part */}
     </div>
   );
 };

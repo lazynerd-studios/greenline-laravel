@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import { useTranslation } from 'next-i18next';
-import Link from '@components/ui/link';
+import Link from '@/components/ui/link';
 
 type SectionProps = {
   className?: any;

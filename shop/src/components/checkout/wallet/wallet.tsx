@@ -1,9 +1,9 @@
-import { isNegative } from '@lib/is-negative';
-import usePrice from '@lib/use-price';
+import { isNegative } from '@/lib/is-negative';
+import usePrice from '@/lib/use-price';
 import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
-import { payableAmountAtom, walletAtom } from '@store/checkout';
-import Checkbox from '@components/ui/checkbox/checkbox';
+import { payableAmountAtom, walletAtom } from '@/store/checkout';
+import Checkbox from '@/components/ui/forms/checkbox/checkbox';
 import { useTranslation } from 'next-i18next';
 interface Props {
   totalPrice: number;
@@ -48,7 +48,7 @@ const Wallet = ({ totalPrice, walletAmount, walletCurrency }: Props) => {
 
   return (
     <div>
-      <div className="space-y-2 mt-2">
+      <div className="mt-2 space-y-2">
         {/* <p>Wallet</p> */}
         <div className="flex justify-between text-sm text-body">
           <span>
@@ -75,7 +75,7 @@ const Wallet = ({ totalPrice, walletAmount, walletCurrency }: Props) => {
       />
 
       {use_wallet && (
-        <div className="flex justify-between border-t-4 border-double border-border-base pt-3 mt-4">
+        <div className="mt-4 flex justify-between border-t-4 border-double border-border-base pt-3">
           <span className="text-base font-semibold text-heading">
             {t('text-payable')}
           </span>

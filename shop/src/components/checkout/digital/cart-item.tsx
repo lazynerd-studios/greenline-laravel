@@ -1,8 +1,8 @@
-import usePrice from '@lib/use-price';
+import usePrice from '@/lib/use-price';
 import cn from 'classnames';
 import { useTranslation } from 'next-i18next';
-import { Image } from '@components/ui/image';
-import { productPlaceholder } from '@lib/placeholders';
+import { Image } from '@/components/ui/image';
+import { productPlaceholder } from '@/lib/placeholders';
 interface Props {
   item: any;
   notAvailable?: boolean;
@@ -15,7 +15,9 @@ const CartItem = ({ item, notAvailable }: Props) => {
   });
   return (
     <div
-      className={cn('flex w-full space-s-3 py-3 first:pt-0 last:pb-0')}
+      className={cn(
+        'flex w-full space-x-3 rtl:space-x-reverse py-3 first:pt-0 last:pb-0'
+      )}
       key={item.id}
     >
       <div className="w-[42px] h-[42px] flex-shrink-0 bg-gray-100">

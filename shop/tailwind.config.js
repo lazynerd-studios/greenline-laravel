@@ -9,11 +9,12 @@ function withOpacity(variableName) {
 }
 
 module.exports = {
-  mode: 'jit',
-  purge: {
-    content: ['./src/**/*.{js,ts,jsx,tsx}'],
-  },
-  darkMode: false, // or 'media' or 'class'
+  content: [
+    './src/pages/**/*.{js,ts,jsx,tsx}',
+    './src/components/**/*.{js,ts,jsx,tsx}',
+    './src/layouts/**/*.{js,ts,jsx,tsx}',
+    './src/lib/**/*.{js,ts,jsx,tsx}',
+  ],
   theme: {
     extend: {
       screens: {
@@ -138,5 +139,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwindcss-rtl')],
+  plugins: [require('@tailwindcss/typography'), require('@tailwindcss/forms')],
 };

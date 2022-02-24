@@ -1,5 +1,5 @@
-import TrashIcon from '@components/icons/trash';
-import Button from '@components/ui/button';
+import TrashIcon from '@/components/icons/trash';
+import Button from '@/components/ui/button';
 import { useTranslation } from 'next-i18next';
 import cn from 'classnames';
 
@@ -42,7 +42,7 @@ const Confirmation: React.FC<ConfirmationCardProps> = ({
           <p className="text-body-dark dark:text-muted leading-relaxed py-2 px-6">
             {t(description)}
           </p>
-          <div className="flex items-center justify-between space-s-4 w-full mt-8">
+          <div className="flex items-center justify-between space-x-4 rtl:space-x-reverse w-full mt-8">
             <div className="w-1/2">
               <Button
                 onClick={onCancel}

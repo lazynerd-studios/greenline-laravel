@@ -1,10 +1,10 @@
-import SearchBox from '@components/ui/search/search-box';
+import SearchBox from '@/components/ui/search/search-box';
 import { useTranslation } from 'next-i18next';
 import { useState } from 'react';
-import AutoSuggestionBox from '@components/search-view/suggestion';
+import AutoSuggestionBox from '@/components/search-view/suggestion';
 import cn from 'classnames';
 import { useRouter } from 'next/router';
-import { ROUTES } from '@lib/routes';
+import { ROUTES } from '@/lib/routes';
 
 interface Props {
   label: string;
